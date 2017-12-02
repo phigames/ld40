@@ -28,9 +28,7 @@ class Game {
   }
 
   void _onClick(html.MouseEvent e) {
-    //if (e.keyCode == html.KeyCode.SPACE) {
-      _currentLevel.onCanvasClick(e.button);
-    //}
+    _currentLevel.onCanvasClick(e.button);
   }
 
   void _onKeyDown(html.KeyboardEvent e) {

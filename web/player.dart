@@ -6,9 +6,9 @@ class Player extends Sprite {
   Foot _activeFoot, _inactiveFoot;
 
   Player() {
-    x = Game.WIDTH / 2;
+    x = 100;
     y = Level.GROUND_Y;
-    scaleX = scaleY = 0.2;
+    scaleX = scaleY = 0.1;
     _leftFoot = new Foot();
     _rightFoot = new Foot();
     _activeFoot = null;
@@ -35,15 +35,21 @@ class Player extends Sprite {
   }
 
   bool steppedOn(Item item) {
-    num footX = _inactiveFoot.x * scaleX + x;
-    num footWidth = _inactiveFoot.width * scaleX;
+    num footX = _inactiveFoot.hitboxX * scaleX + x;
+    num footWidth = _inactiveFoot.hitboxWidth * scaleX;
     return footX < item.x + item.width && footX + footWidth > item.x;
   }
 
-  void grow() {
-    game.stage.juggler.addTween(this, 1.0)
-      ..animate.scaleX.by(0.1)
-      ..animate.scaleY.by(0.1);
+  void grow(num amount) {
+    game.stage.juggler.addTween(this, 0.5, Transition.easeOutQuadratic)
+      ..animate.scaleX.by(amount)
+      ..animate.scaleY.by(amount);
+  }
+
+  void shrink(num amount) {
+    game.stage.juggler.addTween(this, 0.5, Transition.easeOutQuadratic)
+      ..animate.scaleX.by(max(-0.2, amount - scaleX))
+      ..animate.scaleY.by(max(-0.2, amount - scaleY));
   }
 
   void _moveActiveFoot(num distance) {
@@ -94,10 +100,10 @@ class Player extends Sprite {
 
   void update(num passedTime) {
     if (_activeFoot != null && _inactiveFoot != null) {
-      num maxDiff = 3000;
+      num maxDiff = 600 / sqrt(scaleX);
       num feetDifference = _activeFoot.x - (_activeFoot == _leftFoot ? _rightFoot.x : _leftFoot.x) - maxDiff;
       if (feetDifference < 0) {
-        num moveSpeed = 0.2;
+        num moveSpeed = scaleX * scaleX * 10;
         _moveActiveFoot(moveSpeed * feetDifference * feetDifference * passedTime * 0.0004); // quadratic
         //_moveActiveFoot(moveSpeed * -feetDifference * passedTime); // linear
       }

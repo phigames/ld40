@@ -4,25 +4,45 @@ class Level extends DisplayObjectContainer {
 
   static const num GROUND_Y = 500;
 
+  Sprite _background;
+  num _parallaxDistance;
+  Sprite _levelContainer;
   Player _player;
   List<Item> _items;
-  num _scrollSpeed;
 
   Level() {
+    _background = new Sprite();
+    _parallaxDistance = 0;
+    _drawBackground(_background.graphics);
+    addChild(_background);
+    _levelContainer = new Sprite();
+    addChild(_levelContainer);
     _player = new Player();
-    addChild(_player);
+    _levelContainer.addChild(_player);
     _items = new List<Item>();
-    _scrollSpeed = 200;
+  }
+
+  void _drawBackground(Graphics graphics) {
+    graphics.beginPath();
+    void randomRect() {
+      num randomX = random.nextInt(Game.WIDTH + 200) + Game.WIDTH - _background.x;
+      num randomY = random.nextInt(GROUND_Y - 100);
+      graphics.rect(randomX, randomY, random.nextInt(300) + 100, GROUND_Y - randomY);
+      graphics.fillColor(0x22888888);
+    }
+    for (int i = 0; i < 5; i++) {
+      randomRect();
+    }
   }
 
   void _addItem(Item item) {
     _items.add(item);
-    addChild(item);
+    _levelContainer.addChild(item);
   }
 
   void _removeItem(Item item) {
     _items.remove(item);
-    removeChild(item);
+    _levelContainer.removeChild(item);
   }
 
   void _checkItemCollisions() {
@@ -48,6 +68,8 @@ class Level extends DisplayObjectContainer {
     }
   }
 
+  num get scrollX { return _levelContainer.x; }
+
   void onCanvasClick(int button) {
     if (button == 0) {
       _player.step();
@@ -62,15 +84,27 @@ class Level extends DisplayObjectContainer {
     }
   }
 
-  void scroll(num distance) {
-    x -= distance;
+  void _scroll(num passedTime) {
+    //num distance = min(_player.x - 100 + _levelContainer.x, (_player.scaleX + 0.2) * 300 * passedTime);
+    num targetDistance = max(_player.x - 100 + _levelContainer.x, 0);
+    num distance = sqrt(targetDistance) * 40 * passedTime;
+    _levelContainer.x -= distance;
+    _background.x -= distance / 3; // parallax effect
+    _parallaxDistance += distance / 3;
+    if (_parallaxDistance > Game.WIDTH) {
+      _drawBackground(_background.graphics);
+      _parallaxDistance = 0;
+    }
+    if (random.nextDouble() < distance * 0.005) {
+      _addItem(new MagicPotion(this));
+    }
+    if (random.nextDouble() < distance * 0.002) {
+      _addItem(new Cactus(this));
+    }
   }
 
   void update(num passedTime) {
-    if (random.nextDouble() < passedTime) {
-      _addItem(new FoodItem(this));
-    }
-    scroll(_scrollSpeed * passedTime);
+    _scroll(passedTime);
     _player.update(passedTime);
     _checkItemsOffScreen();
   }

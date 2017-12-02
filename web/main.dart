@@ -31,5 +31,8 @@ Future<Null> main() async {
 }
 
 void addResources() {
-  resourceManager.addBitmapData('test', 'images/test.png');
+  resourceManager.addBitmapData('potion', 'images/potion.png');
+  resourceManager.addBitmapData('cactus', 'images/cactus.png');
+  resourceManager.addBitmapData('car', 'images/car.png');
+  resourceManager.addBitmapData('house', 'images/house.png');
 }
