@@ -7,6 +7,7 @@ import 'dart:math';
 
 part 'game.dart';
 part 'level.dart';
+part 'player.dart';
 part 'foot.dart';
 
 ResourceManager resourceManager;
@@ -14,10 +15,7 @@ Random random;
 Game game;
 
 Future<Null> main() async {
-  Stage stage = new Stage(html.querySelector('#stage'),
-      width: 1280, height: 800, options: new StageOptions()
-        ..backgroundColor = Color.White
-        ..renderEngine = RenderEngine.WebGL);
+  html.CanvasElement canvas = html.querySelector('#stage');
 
   resourceManager = new ResourceManager();
   addResources();
@@ -25,7 +23,7 @@ Future<Null> main() async {
 
   random = new Random();
 
-  game = new Game(stage);
+  game = new Game(canvas);
 
   // See more examples:
   // https://github.com/bp74/StageXL_Samples
