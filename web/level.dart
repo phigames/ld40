@@ -12,8 +12,6 @@ class Level extends DisplayObjectContainer {
     _player = new Player();
     addChild(_player);
     _items = new List<Item>();
-    _items.add(new FoodItem());
-    _items.forEach((i) => addChild(i));
     _scrollSpeed = 200;
   }
 
@@ -69,6 +67,9 @@ class Level extends DisplayObjectContainer {
   }
 
   void update(num passedTime) {
+    if (random.nextDouble() < passedTime) {
+      _addItem(new FoodItem(this));
+    }
     scroll(_scrollSpeed * passedTime);
     _player.update(passedTime);
     _checkItemsOffScreen();

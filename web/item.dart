@@ -4,9 +4,9 @@ abstract class Item extends Sprite {
 
   bool dead;
 
-  Item(BitmapData bitmapData) {
+  Item(Level level, BitmapData bitmapData) {
     dead = false;
-    x = Game.WIDTH;
+    x = Game.WIDTH - level.x + 1000;
     y = Level.GROUND_Y - 50;
     addChild(new Bitmap(bitmapData));
   }
@@ -19,9 +19,7 @@ class FoodItem extends Item {
 
   static BitmapData bitmapData = resourceManager.getBitmapData('test');
 
-  FoodItem() : super(bitmapData) {
-
-  }
+  FoodItem(Level level) : super(level, bitmapData);
 
   @override
   void onCollide(Player player) {
