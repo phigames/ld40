@@ -20,7 +20,8 @@ class Foot extends Sprite {
     rotation = INACTIVE_ROTATION;
     pivotX = 50;
     pivotY = 0;
-    _hitboxX = 50;
+    //_hitboxX = 50;
+    _hitboxX = 0;
     _hitboxWidth = WIDTH + 25;
   }
 

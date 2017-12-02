@@ -2,12 +2,9 @@ part of ld40;
 
 abstract class Item extends Sprite {
 
-  bool dead;
-
   Item(Level level, BitmapData bitmapData) {
-    dead = false;
     setBitmap(bitmapData);
-    x = Game.WIDTH - level.scrollX + 1000;
+    x = Game.WIDTH - level.scrollX + 300;
   }
 
   void setBitmap(BitmapData bitmapData) {
@@ -23,14 +20,14 @@ abstract class Item extends Sprite {
 class MagicPotion extends Item {
 
   static BitmapData bitmapData = resourceManager.getBitmapData('potion');
+  static BitmapData bitmapDataBroken = resourceManager.getBitmapData('potion_broken');
 
   MagicPotion(Level level) : super(level, bitmapData);
 
   @override
   void onCollide(Player player) {
     player.grow(0.1);
-    dead = true;
-    print(dead);
+    setBitmap(bitmapDataBroken);
   }
 
 }
@@ -38,7 +35,7 @@ class MagicPotion extends Item {
 class Cactus extends Item {
 
   static BitmapData bitmapData = resourceManager.getBitmapData('cactus');
-  static BitmapData bitmapDataBroken = resourceManager.getBitmapData('car');
+  static BitmapData bitmapDataBroken = resourceManager.getBitmapData('cactus_broken');
 
   bool broken;
 
@@ -47,7 +44,6 @@ class Cactus extends Item {
   @override
   void onCollide(Player player) {
     player.shrink(0.2);
-    broken = true;
     setBitmap(bitmapDataBroken);
   }
 
@@ -56,12 +52,14 @@ class Cactus extends Item {
 class Car extends Item {
 
   static BitmapData bitmapData = resourceManager.getBitmapData('car');
+  static BitmapData bitmapDataBroken = resourceManager.getBitmapData('car_broken');
 
   Car(Level level) : super(level, bitmapData);
 
   @override
   void onCollide(Player player) {
     player.shrink(0.3);
+    setBitmap(bitmapDataBroken);
   }
 
 }
@@ -69,12 +67,14 @@ class Car extends Item {
 class House extends Item {
 
   static BitmapData bitmapData = resourceManager.getBitmapData('house');
+  static BitmapData bitmapDataBroken = resourceManager.getBitmapData('house_broken');
 
   House(Level level) : super(level, bitmapData);
 
   @override
   void onCollide(Player player) {
     player.shrink(0.5);
+    setBitmap(bitmapDataBroken);
   }
 
 }

@@ -50,10 +50,6 @@ class Level extends DisplayObjectContainer {
       Item item = _items[i];
       if (_player.steppedOn(item)) {
         item.onCollide(_player);
-        if (item.dead) {
-          _removeItem(item);
-          i--;
-        }
       }
     }
   }

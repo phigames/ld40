@@ -8,7 +8,8 @@ class Player extends Sprite {
   Player() {
     x = 100;
     y = Level.GROUND_Y;
-    scaleX = scaleY = 0.1;
+    //scaleX = scaleY = 0.1;
+    scaleX = scaleY = 0.3;
     _leftFoot = new Foot();
     _rightFoot = new Foot();
     _activeFoot = null;
