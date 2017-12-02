@@ -4,22 +4,63 @@ class Level extends DisplayObjectContainer {
 
   static const num GROUND_Y = 500;
 
-  Player player;
+  Player _player;
+  List<Item> _items;
+  num _scrollSpeed;
 
   Level() {
-    player = new Player();
-    addChild(player);
+    _player = new Player();
+    addChild(_player);
+    _items = new List<Item>();
+    _items.add(new FoodItem());
+    _items.forEach((i) => addChild(i));
+    _scrollSpeed = 200;
+  }
+
+  void _addItem(Item item) {
+    _items.add(item);
+    addChild(item);
+  }
+
+  void _removeItem(Item item) {
+    _items.remove(item);
+    removeChild(item);
+  }
+
+  void _checkItemCollisions() {
+    for (int i = 0; i < _items.length; i++) {
+      Item item = _items[i];
+      if (_player.steppedOn(item)) {
+        item.onCollide(_player);
+        if (item.dead) {
+          _removeItem(item);
+          i--;
+        }
+      }
+    }
+  }
+
+  void _checkItemsOffScreen() {
+    for (int i = 0; i < _items.length; i++) {
+      Item item = _items[i];
+      if (item.x + item.width + x < 0) {
+        _removeItem(item);
+        i--;
+      }
+    }
   }
 
   void onCanvasClick(int button) {
     if (button == 0) {
-      player.step();
+      _player.step();
+      _checkItemCollisions();
     }
   }
 
   void onCanvasKeyDown(int keyCode) {
     if (keyCode == html.KeyCode.SPACE) {
-      player.step();
+      _player.step();
+      _checkItemCollisions();
     }
   }
 
@@ -28,9 +69,9 @@ class Level extends DisplayObjectContainer {
   }
 
   void update(num passedTime) {
-    scroll(300 * passedTime);
-    //increasePlayerScale(0.1 * passedTime);
-    player.update(passedTime);
+    scroll(_scrollSpeed * passedTime);
+    _player.update(passedTime);
+    _checkItemsOffScreen();
   }
 
 }

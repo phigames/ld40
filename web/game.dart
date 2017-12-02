@@ -2,8 +2,8 @@ part of ld40;
 
 class Game {
 
-  static const int WIDTH = 1280;
-  static const int HEIGHT = 800;
+  static const int WIDTH = 800;
+  static const int HEIGHT = 600;
 
   Stage _stage;
   RenderLoop _renderLoop;

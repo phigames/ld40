@@ -9,6 +9,7 @@ part 'game.dart';
 part 'level.dart';
 part 'player.dart';
 part 'foot.dart';
+part 'item.dart';
 
 ResourceManager resourceManager;
 Random random;
@@ -30,5 +31,5 @@ Future<Null> main() async {
 }
 
 void addResources() {
-
+  resourceManager.addBitmapData('test', 'images/test.png');
 }
