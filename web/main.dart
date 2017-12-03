@@ -17,7 +17,7 @@ Random random;
 Game game;
 
 Future<Null> main() async {
-  print('bananas!');
+  print('what a guy!');
   canvas = html.querySelector('#stage');
   canvas.context2D.imageSmoothingEnabled = true;
 
