@@ -17103,6 +17103,7 @@
           switch ($async$goto) {
             case 0:
               // Function start
+              P.print("bananas!");
               t1 = document;
               t2 = t1.querySelector("#stage");
               $.canvas = t2;
@@ -18152,9 +18153,6 @@
         this._targetScale = 0.1;
         this.set$scaleY(0.1);
         this.set$scaleX(0.1);
-        this._targetScale = 1;
-        this.set$scaleY(1);
-        this.set$scaleX(1);
         this._blinkTime = 0;
         t1 = [A.DisplayObject];
         t2 = H.setRuntimeTypeInfo([], t1);

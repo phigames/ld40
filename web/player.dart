@@ -21,7 +21,7 @@ class Player extends Sprite {
     x = 100;
     y = Level.GROUND_Y;
     scaleX = scaleY = _targetScale = MIN_SCALE;
-    scaleX = scaleY = _targetScale = 1.0 ;
+    //scaleX = scaleY = _targetScale = 1.0;
     _blinkTime = 0;
     _leftLeg = new Sprite();
     _body = new Sprite();
