@@ -2,9 +2,10 @@ part of ld40;
 
 abstract class Item extends Sprite {
 
+  Level level;
   bool broken;
 
-  Item(Level level, BitmapData bitmapData, [num x = null]) {
+  Item(this.level, BitmapData bitmapData, [num x = null]) {
     broken = false;
     setBitmap(bitmapData);
     if (x == null) {
@@ -56,6 +57,7 @@ class Cactus extends Item {
     broken = true;
     player.shrink(0.1);
     setBitmap(bitmapDataBroken);
+    level._destroyedCacti++;
   }
 
 }
@@ -73,6 +75,7 @@ class Car extends Item {
       broken = true;
       player.shrink(0.3);
       setBitmap(bitmapDataBroken);
+      level._destroyedCars++;
     }
   }
 
@@ -91,7 +94,21 @@ class House extends Item {
       broken = true;
       player.shrink(0.5);
       setBitmap(bitmapDataBroken);
+      level._destroyedHouses++;
     }
+  }
+
+}
+
+class Goal extends Item {
+
+  static BitmapData bitmapData = resourceManager.getBitmapData('goal');
+
+  Goal(Level level, num x) : super(level, bitmapData, x);
+
+  @override
+  void onCollide(Player player, int playerSize) {
+    level.onWin();
   }
 
 }

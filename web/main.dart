@@ -11,12 +11,13 @@ part 'player.dart';
 part 'foot.dart';
 part 'item.dart';
 
+html.CanvasElement canvas;
 ResourceManager resourceManager;
 Random random;
 Game game;
 
 Future<Null> main() async {
-  html.CanvasElement canvas = html.querySelector('#stage');
+  canvas = html.querySelector('#stage');
   canvas.context2D.imageSmoothingEnabled = true;
 
   resourceManager = new ResourceManager();
@@ -25,7 +26,18 @@ Future<Null> main() async {
 
   random = new Random();
 
-  game = new Game(canvas);
+  if (html.document.readyState != 'complete') {
+    html.document.onReadyStateChange.listen((_) => onReadyStateChange());
+  } else {
+    game = new Game(canvas);
+  }
+}
+
+void onReadyStateChange() {
+  print('readystate: ${html.document.readyState}');
+  if (html.document.readyState == "complete") {
+    game = new Game(canvas);
+  }
 }
 
 void addResources() {
@@ -37,7 +49,7 @@ void addResources() {
   resourceManager.addBitmapData('car_broken', 'images/car_broken.png');
   resourceManager.addBitmapData('house', 'images/house.png');
   resourceManager.addBitmapData('house_broken', 'images/house_broken.png');
-  resourceManager.addBitmapData('test', 'images/test.png');
+  resourceManager.addBitmapData('goal', 'images/goal.png');
 
   resourceManager.addSound('first', 'sounds/first.ogg');
   resourceManager.addSound('second', 'sounds/second.ogg');

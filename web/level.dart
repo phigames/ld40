@@ -3,8 +3,9 @@ part of ld40;
 class Level extends DisplayObjectContainer {
 
   static final List<int> BACKGROUND_COLORS = [ 0xFFBBDDFF, 0xFFDDBBDD, 0xFFDD9999 ];
+  static const int PROGRESS_BAR_COLOR = 0xFF22CC22;
   static const num GROUND_Y = 500;
-  static const num END_DISTANCE = 50000;
+  static const num END_DISTANCE = 30000;
 
   Shape _backgroundColorShape;
   int _oldBackgroundColor;
@@ -16,9 +17,13 @@ class Level extends DisplayObjectContainer {
   Sprite _levelContainer;
   Player _player;
   List<Item> _items;
+  num _destroyedCacti, _destroyedCars, _destroyedHouses;
+  num _playingTime;
+  num _shakeTime;
   Sprite _progressBar;
-  //Sprite _test;
+  Shape _progressBarHead;
   int _playerSize;
+  bool _won;
   bool _spaceDown;
   Sound _firstLoop, _secondLoop, _thirdLoop;
   SoundChannel _activeLoopChannel;
@@ -48,49 +53,53 @@ class Level extends DisplayObjectContainer {
 
     _items = new List<Item>();
 
+    _destroyedCacti = _destroyedCars = _destroyedHouses = 0;
+    _playingTime = 0;
+
+    _shakeTime = 0;
+
     _progressBar = new Sprite();
-    _updateProgressBar(_progressBar.graphics);
     addChild(_progressBar);
+    _progressBarHead = new Shape();
+    _progressBar.addChild(_progressBarHead);
+    _drawProgressBarHead(_progressBarHead.graphics);
+    _updateProgressBar(_progressBar.graphics);
 
     // instructions
     _addItem(new MagicPotion(this, Game.WIDTH + 100, 0.1));
     _addItem(new Cactus(this, Game.WIDTH + 600));
     _background.addChild(
-        new TextField('What a beautiful day!', new TextFormat("sans-serif", 50, 0xFF222222))
-          ..wordWrap = false
+        new TextField('What a beautiful day!', new TextFormat(Game.FONT, 50, 0xFF222222))
           ..x = 150
           ..y = 50
           ..width = Game.WIDTH);
     _levelContainer.addChild(
-        new TextField('▼ This is you.', new TextFormat("sans-serif", 30, 0xFF222222))
-          ..wordWrap = false
+        new TextField('▼ This is you.', new TextFormat(Game.FONT, 30, 0xFF222222))
           ..x = 90
           ..y = 370
           ..width = Game.WIDTH);
     _levelContainer.addChild(
-        new TextField('Press [SPACE] or click to take a step.', new TextFormat("sans-serif", 30, 0xFFDDDDDD))
-          ..wordWrap = false
+        new TextField('Press [SPACE] or click to take a step.', new TextFormat(Game.FONT, 30, 0xFFDDDDDD))
           ..x = 150
-          ..y = Game.HEIGHT - 50
+          ..y = Game.HEIGHT - 70
           ..width = Game.WIDTH);
     _levelContainer.addChild(
-        new TextField('▼ I wonder what this potion\n     would do to you...', new TextFormat("sans-serif", 30, 0xFF222222))
-          ..wordWrap = false
-          ..x = Game.WIDTH + 110
+        new TextField('▼ I wonder what this potion\n     would do to you...', new TextFormat(Game.FONT, 30, 0xFF222222))
+          ..x = Game.WIDTH + 115
           ..y = 350
           ..width = Game.WIDTH);
     _levelContainer.addChild(
-        new TextField('▼ Don\'t step on this!', new TextFormat("sans-serif", 30, 0xFF222222))
-          ..wordWrap = false
+        new TextField('▼ Don\'t step on this!', new TextFormat(Game.FONT, 30, 0xFF222222))
           ..x = Game.WIDTH + 610
           ..y = 380
           ..width = Game.WIDTH);
 
-    /*_test = new Sprite();
-    _test.addChild(new Bitmap(resourceManager.getBitmapData('test')));
-    _levelContainer.addChild(_test);*/
+    // goal
+    _addItem(new Goal(this, END_DISTANCE));
 
     _playerSize = 0;
+
+    _won = false;
 
     _spaceDown = false;
 
@@ -241,14 +250,32 @@ class Level extends DisplayObjectContainer {
     }
   }
 
+  void _drawProgressBarHead(Graphics graphics) {
+    graphics.beginPath();
+    graphics.circle(0, 15, 15);
+    graphics.fillColor(Player.SKIN_COLOR);
+    graphics.beginPath();
+    graphics.circle(2, 7, 2);
+    graphics.fillColor(Player.FACE_COLOR);
+    graphics.beginPath();
+    graphics.moveTo(7, 15);
+    graphics.lineTo(15, 15);
+    graphics.strokeColor(Player.FACE_COLOR, 4);
+    graphics.beginPath();
+    graphics.circle(7, 15, 2);
+    graphics.fillColor(Player.FACE_COLOR);
+  }
+
   void _updateProgressBar(Graphics graphics) {
+    num progress = _player.x / END_DISTANCE;
     graphics.clear();
     graphics.beginPath();
-    graphics.rect(0, 0, Game.WIDTH * _player.x / END_DISTANCE, 30);
-    graphics.fillColor(0xFF22DD22);
+    graphics.rect(0, 0, progress * Game.WIDTH, 30);
+    graphics.fillColor(PROGRESS_BAR_COLOR);
     graphics.beginPath();
     graphics.rect(0, 0, Game.WIDTH, 30);
-    graphics.strokeColor(0xFF222222);
+    graphics.strokeColor(0xFF222222, 2);
+    _progressBarHead.x = progress * Game.WIDTH;
   }
 
   void _playLoop(Sound loop) {
@@ -267,18 +294,70 @@ class Level extends DisplayObjectContainer {
 
   num get scrollX { return _levelContainer.x; }
 
+  void _step() {
+    _player.step();
+    _checkItemCollisions();
+    if (_playerSize >= 2) {
+      _shakeTime = 0.5;
+    }
+  }
+
+  void onWin() {
+    if (!_won) {
+      _won = true;
+      addChild(
+          new TextField('You made it!', new TextFormat(Game.FONT, 50, 0xFF222222))
+            ..x = 150
+            ..y = 50
+            ..width = Game.WIDTH);
+      addChild(
+          new TextField('On your way to work, you destroyed', new TextFormat(Game.FONT, 30, 0xFF222222))
+            ..x = 150
+            ..y = 150
+            ..width = Game.WIDTH);
+      addChild(
+          new TextField('$_destroyedCacti cact${_destroyedCacti == 1 ? 'us' : 'i'}', new TextFormat(Game.FONT, 30, 0xFF222222))
+            ..x = 180
+            ..y = 180
+            ..width = Game.WIDTH);
+      addChild(
+          new TextField('$_destroyedCars car${_destroyedCars == 1 ? '' : 's'}', new TextFormat(Game.FONT, 30, 0xFF222222))
+            ..x = 180
+            ..y = 210
+            ..width = Game.WIDTH);
+      addChild(
+          new TextField('$_destroyedHouses house${_destroyedHouses == 1 ? '' : 's'}', new TextFormat(Game.FONT, 30, 0xFF222222))
+            ..x = 180
+            ..y = 240
+            ..width = Game.WIDTH);
+      addChild(
+          new TextField('You took ${_playingTime ~/ 60} min ${_playingTime.round() % 60} s.', new TextFormat(Game.FONT, 30, 0xFF222222))
+            ..x = 150
+            ..y = 300
+            ..width = Game.WIDTH);
+      addChild(
+          new TextField('Thank you for playing!', new TextFormat(Game.FONT, 40, 0xFFDDDDDD))
+            ..x = 100
+            ..y = Game.HEIGHT - 80
+            ..width = Game.WIDTH);
+      addChild(
+          new TextField('sophiakene & phi\nLudum Dare 40', new TextFormat(Game.FONT, 20, 0xFFDDDDDD))
+            ..x = 550
+            ..y = Game.HEIGHT - 80
+            ..width = Game.WIDTH);
+    }
+  }
+
   void onCanvasClick(int button) {
     if (button == 0) {
-      _player.step();
-      _checkItemCollisions();
+      _step();
     }
   }
 
   void onCanvasKeyDown(int keyCode) {
     if (keyCode == html.KeyCode.SPACE && !_spaceDown) {
       _spaceDown = true;
-      _player.step();
-      _checkItemCollisions();
+      _step();
     }
   }
 
@@ -288,12 +367,24 @@ class Level extends DisplayObjectContainer {
     }
   }
 
+  void onCanvasTouch() {
+    _step();
+  }
+
   void update(num passedTime) {
+    _playingTime += passedTime;
     _scroll(passedTime);
     _player.update(passedTime);
     _checkItemsOffScreen();
     _updateProgressBar(_progressBar.graphics);
     _updatePlayerSize();
+    if (_shakeTime > 0) {
+      _shakeTime -= passedTime;
+      if (_shakeTime < 0) {
+        _shakeTime = 0;
+      }
+      y = sin(_shakeTime * 20) * 50 * _shakeTime;
+    }
     _updateBackgroundColor(passedTime);
   }
 

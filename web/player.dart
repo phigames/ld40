@@ -4,22 +4,25 @@ class Player extends Sprite {
 
   static const num MIN_SCALE = 0.1;
   static const int SKIN_COLOR = 0xFFFFE4C4;
+  static const int FACE_COLOR = 0xFF555555;
   static const int SHIRT_COLOR = 0xFFFF5520;
   static const int SHIRT_COLOR_DARK = 0xFFE04510;
   static const int PANTS_COLOR = 0xFF5485ED;
   static const int SHOES_COLOR = 0xFFA05A2C;
 
+  num _targetScale;
+  num _blinkTime;
   Sprite _leftLeg; // must be drawn before left foot, thus separate
   Sprite _body;
   Foot _leftFoot, _rightFoot;
   Foot _activeFoot, _inactiveFoot;
-  num _targetScale;
 
   Player() {
     x = 100;
     y = Level.GROUND_Y;
     scaleX = scaleY = _targetScale = MIN_SCALE;
-    //scaleX = scaleY = _targetScale = 0.3;
+    //scaleX = scaleY = _targetScale = 1.0;
+    _blinkTime = 0;
     _leftLeg = new Sprite();
     _body = new Sprite();
     _leftFoot = new Foot();
@@ -68,6 +71,7 @@ class Player extends Sprite {
     game.stage.juggler.addTween(this, 0.5, Transition.easeOutQuadratic)
       ..animate.scaleX.to(_targetScale)
       ..animate.scaleY.to(_targetScale);
+    _blinkTime = 0.8;
   }
 
   num get activeFootPosition {
@@ -138,6 +142,16 @@ class Player extends Sprite {
     _body.graphics.beginPath();
     _body.graphics.circle(50, -750, 100);
     _body.graphics.fillColor(SKIN_COLOR);
+    _body.graphics.beginPath();
+    _body.graphics.circle(75, -800, 10);
+    _body.graphics.fillColor(FACE_COLOR);
+    _body.graphics.beginPath();
+    _body.graphics.moveTo(100, -750);
+    _body.graphics.lineTo(150, -750);
+    _body.graphics.strokeColor(FACE_COLOR, 20);
+    _body.graphics.beginPath();
+    _body.graphics.circle(100, -750, 10);
+    _body.graphics.fillColor(FACE_COLOR);
 
     // right leg
     _body.graphics.beginPath();
@@ -155,6 +169,18 @@ class Player extends Sprite {
         num moveSpeed = scaleX * scaleX * 10;
         _moveActiveFoot(moveSpeed * feetDifference * feetDifference * passedTime * 0.0004); // quadratic
         //_moveActiveFoot(moveSpeed * -feetDifference * passedTime); // linear
+      }
+    }
+    if (_blinkTime > 0) {
+      if ((_blinkTime * 6).ceil() % 2 == 0) {
+        visible = false;
+      } else {
+        visible = true;
+      }
+      _blinkTime -= passedTime;
+      if (_blinkTime < 0) {
+        _blinkTime = 0;
+        visible = true;
       }
     }
     _drawBody();
