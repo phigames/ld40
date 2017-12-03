@@ -2,7 +2,7 @@ part of ld40;
 
 class Level extends DisplayObjectContainer {
 
-  static final List<int> BACKGROUND_COLORS = [ 0xFFBBDDFF, 0xFFDDBBDD, 0xFFDD9999 ];
+  static final List<int> BACKGROUND_COLORS = [ 0xFFBBDDFF, /*0xFFDDBBDD,*/ 0xFFDD9999 ];
   static const int PROGRESS_BAR_COLOR = 0xFF22CC22;
   static const num GROUND_Y = 500;
   static const num END_DISTANCE = 40000;
@@ -17,16 +17,19 @@ class Level extends DisplayObjectContainer {
   Sprite _levelContainer;
   Player _player;
   List<Item> _items;
+  num _lastItemPosition;
   num _destroyedCacti, _destroyedCars, _destroyedHouses;
   num _playingTime;
   num _shakeTime;
   Sprite _progressBar;
   Shape _progressBarHead;
+  TextField _timer;
   int _playerSize;
   bool _won;
   bool _spaceDown;
-  Sound _firstLoop, _secondLoop, _thirdLoop;
+  Sound _firstLoop, _secondLoop, _thirdLoop, _loop;
   SoundChannel _activeLoopChannel;
+  Sound _endSound;
 
   Level() {
     _backgroundColorShape = new Shape();
@@ -52,9 +55,10 @@ class Level extends DisplayObjectContainer {
     _levelContainer.addChild(_player);
 
     _items = new List<Item>();
+    _lastItemPosition = 0;
 
     _destroyedCacti = _destroyedCars = _destroyedHouses = 0;
-    _playingTime = 0;
+    _playingTime = -120;
 
     _shakeTime = 0;
 
@@ -65,16 +69,22 @@ class Level extends DisplayObjectContainer {
     _drawProgressBarHead(_progressBarHead.graphics);
     _updateProgressBar(_progressBar.graphics);
 
+    _timer = new TextField('', new TextFormat(Game.FONT, 30, 0xFF222222))
+      ..x = Game.WIDTH - 150
+      ..y = 60
+      ..width = Game.WIDTH;
+    addChild(_timer);
+
     // instructions
     _addItem(new MagicPotion(this, Game.WIDTH + 100, 0.1));
     _addItem(new Cactus(this, Game.WIDTH + 600));
     _background.addChild(
-        new TextField('What a beautiful day!', new TextFormat(Game.FONT, 50, 0xFF222222))
-          ..x = 150
+        new TextField('Hurry up, school starts at 8! ▶', new TextFormat(Game.FONT, 45, 0xFF222222))
+          ..x = 30
           ..y = 50
           ..width = Game.WIDTH);
     _levelContainer.addChild(
-        new TextField('▼ This is you.', new TextFormat(Game.FONT, 30, 0xFF222222))
+        new TextField('▼ This is Guy.', new TextFormat(Game.FONT, 30, 0xFF222222))
           ..x = 90
           ..y = 370
           ..width = Game.WIDTH);
@@ -84,7 +94,7 @@ class Level extends DisplayObjectContainer {
           ..y = Game.HEIGHT - 70
           ..width = Game.WIDTH);
     _levelContainer.addChild(
-        new TextField('▼ I wonder what this potion\n     would do to you...', new TextFormat(Game.FONT, 30, 0xFF222222))
+        new TextField('▼ Oh look, a magic potion!', new TextFormat(Game.FONT, 30, 0xFF222222))
           ..x = Game.WIDTH + 115
           ..y = 350
           ..width = Game.WIDTH);
@@ -106,7 +116,8 @@ class Level extends DisplayObjectContainer {
     _firstLoop = resourceManager.getSound('first');
     _secondLoop = resourceManager.getSound('second');
     _thirdLoop = resourceManager.getSound('third');
-    _playLoop(_firstLoop);
+    _loop = resourceManager.getSound('loop');
+    _endSound = resourceManager.getSound('end');
   }
 
   void _addItem(Item item) {
@@ -158,46 +169,56 @@ class Level extends DisplayObjectContainer {
   }
 
   void _spawnItems(num distanceScrolled) {
-    if (random.nextDouble() < distanceScrolled * 0.002 * (3 - _playerSize)) {
-      _addItem(new MagicPotion(this));
-    }
-    if (_playerSize >= 2) {
-      if (random.nextDouble() < distanceScrolled * 0.0005) {
-        _addItem(new House(this));
+    if (_lastItemPosition < -_levelContainer.x + Game.WIDTH - 50) {
+      if (_playerSize >= 2) {
+        if (random.nextDouble() < distanceScrolled * 0.0005) {
+          _addItem(new House(this));
+          _lastItemPosition = Game.WIDTH - _levelContainer.x + 200;
+          return;
+        }
       }
-    }
-    if (_playerSize >= 1) {
-      if (random.nextDouble() < distanceScrolled * 0.001) {
-        _addItem(new Car(this));
+      if (_playerSize >= 1) {
+        if (random.nextDouble() < distanceScrolled * 0.001) {
+          _addItem(new Car(this));
+          _lastItemPosition = Game.WIDTH - _levelContainer.x + 100;
+          return;
+        }
+      } else if (_playerSize == 0) {
+        if (random.nextDouble() < distanceScrolled * 0.002) {
+          _addItem(new Cactus(this));
+          _lastItemPosition = Game.WIDTH - _levelContainer.x + 50;
+          return;
+        }
       }
-    } else if (_playerSize == 0) {
-      if (random.nextDouble() < distanceScrolled * 0.002) {
-        _addItem(new Cactus(this));
+      if (random.nextDouble() < distanceScrolled * 0.001 * (3 - _playerSize)) {
+        _addItem(new MagicPotion(this));
+        _lastItemPosition = Game.WIDTH - _levelContainer.x + 50;
+        return;
       }
     }
   }
 
   void _updatePlayerSize() {
-    if (_player.scaleY >= 1.0) {
+    if (_player.scaleY >= 0.8) {
       if (_playerSize != 2) {
         _playerSize = 2;
-        _playLoop(_thirdLoop);
-        _targetBackgroundColor = BACKGROUND_COLORS[_playerSize];
-        _backgroundColorTime = 1.0;
+        //_playLoop(_thirdLoop);
+        //_targetBackgroundColor = BACKGROUND_COLORS[_playerSize];
+        //_backgroundColorTime = 1.0;
       }
     } else if (_player.scaleY >= 0.5) {
       if (_playerSize != 1) {
         _playerSize = 1;
-        _playLoop(_secondLoop);
-        _targetBackgroundColor = BACKGROUND_COLORS[_playerSize];
-        _backgroundColorTime = 1.0;
+        //_playLoop(_secondLoop);
+        //_targetBackgroundColor = BACKGROUND_COLORS[_playerSize];
+        //_backgroundColorTime = 1.0;
       }
     } else {
       if (_playerSize != 0) {
         _playerSize = 0;
-        _playLoop(_firstLoop);
-        _targetBackgroundColor = BACKGROUND_COLORS[_playerSize];
-        _backgroundColorTime = 1.0;
+        //_playLoop(_firstLoop);
+        //_targetBackgroundColor = BACKGROUND_COLORS[_playerSize];
+        //_backgroundColorTime = 1.0;
       }
     }
   }
@@ -287,15 +308,20 @@ class Level extends DisplayObjectContainer {
     } else {
       _firstLoop.play().onComplete.listen((_) => _playMusic());
     }*/
+    //num position = 0;
     if (_activeLoopChannel != null) {
+    //  position = _activeLoopChannel.position;
       _activeLoopChannel.stop();
     }
-    _activeLoopChannel = loop.play(true);
+    _activeLoopChannel = loop.play(true)/*..position = position*/;
   }
 
   num get scrollX { return _levelContainer.x; }
 
   void _step() {
+    if (_activeLoopChannel == null) {
+      _playLoop(_loop);
+    }
     _player.step();
     _checkItemCollisions();
     if (_playerSize >= 2) {
@@ -306,13 +332,18 @@ class Level extends DisplayObjectContainer {
   void onWin() {
     if (!_won) {
       _won = true;
+      if (_activeLoopChannel != null) {
+        _activeLoopChannel.stop();
+      }
+      _endSound.play();
+      removeChild(_timer);
       addChild(
-          new TextField('You made it!', new TextFormat(Game.FONT, 50, 0xFF222222))
-            ..x = 150
+          new TextField('Guy finally arrived at school!', new TextFormat(Game.FONT, 50, 0xFF222222))
+            ..x = 70
             ..y = 50
             ..width = Game.WIDTH);
       addChild(
-          new TextField('On your way to work you destroyed', new TextFormat(Game.FONT, 30, 0xFF222222))
+          new TextField('On his way he demolished', new TextFormat(Game.FONT, 30, 0xFF222222))
             ..x = 150
             ..y = 150
             ..width = Game.WIDTH);
@@ -331,10 +362,28 @@ class Level extends DisplayObjectContainer {
             ..x = 180
             ..y = 240
             ..width = Game.WIDTH);
+      if (_playingTime < 0) { // early
+        addChild(
+            new TextField('He is ${-_playingTime ~/ 60} min ${-_playingTime.round() % 60} s early.', new TextFormat(Game.FONT, 30, 0xFF222222))
+              ..x = 150
+              ..y = 300
+              ..width = Game.WIDTH);
+        addChild(
+            new TextField('Maybe he could\'ve finished watching that episode of Monty Python after all...', new TextFormat(Game.FONT, 15, 0xFF222222))
+              ..x = 150
+              ..y = 330
+              ..width = Game.WIDTH);
+      } else { // late
+        addChild(
+            new TextField('He is ${_playingTime ~/ 60} min ${_playingTime.round() % 60} s late.', new TextFormat(Game.FONT, 30, 0xFF222222))
+              ..x = 150
+              ..y = 300
+              ..width = Game.WIDTH);
+      }
       addChild(
-          new TextField('You took ${_playingTime ~/ 60} min ${_playingTime.round() % 60} s.', new TextFormat(Game.FONT, 30, 0xFF222222))
+          new TextField('[R] to play again.', new TextFormat(Game.FONT, 30, 0xFF222222))
             ..x = 150
-            ..y = 300
+            ..y = 400
             ..width = Game.WIDTH);
       addChild(
           new TextField('Thank you for playing!', new TextFormat(Game.FONT, 40, 0xFFDDDDDD))
@@ -359,6 +408,8 @@ class Level extends DisplayObjectContainer {
     if (keyCode == html.KeyCode.SPACE && !_spaceDown) {
       _spaceDown = true;
       _step();
+    } else if (_won && keyCode == html.KeyCode.R) {
+      game.newLevel();
     }
   }
 
@@ -374,6 +425,15 @@ class Level extends DisplayObjectContainer {
 
   void update(num passedTime) {
     _playingTime += passedTime;
+    if (_playingTime - passedTime < 0 && _playingTime >= 0) { // just turned 8 a.m.
+      _targetBackgroundColor = BACKGROUND_COLORS[1];
+      _backgroundColorTime = 1.0;
+    }
+    num time = 8 * 3600 + _playingTime; // origin is 8 a.m.
+    num hours = time ~/ 3600;
+    num minutes = time % 3600 ~/ 60;
+    num seconds = time.floor() % 60;
+    _timer.text = '${hours < 10 ? '0' : ''}$hours:${minutes < 10 ? '0' : ''}$minutes:${seconds < 10 ? '0' : ''}$seconds';
     _scroll(passedTime);
     _player.update(passedTime);
     _checkItemsOffScreen();

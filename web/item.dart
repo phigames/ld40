@@ -9,7 +9,7 @@ abstract class Item extends Sprite {
     broken = false;
     setBitmap(bitmapData);
     if (x == null) {
-      this.x = Game.WIDTH - level.scrollX + 300;
+      this.x = Game.WIDTH - level.scrollX;
     } else {
       this.x = x;
     }
@@ -32,7 +32,7 @@ class MagicPotion extends Item {
 
   num growAmount;
 
-  MagicPotion(Level level, [num x = null, this.growAmount = 0.05]) : super(level, bitmapData, x);
+  MagicPotion(Level level, [num x = null, this.growAmount = 0.1]) : super(level, bitmapData, x);
 
   @override
   void onCollide(Player player, int playerSize) {

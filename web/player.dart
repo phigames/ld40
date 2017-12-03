@@ -16,6 +16,7 @@ class Player extends Sprite {
   Sprite _body;
   Foot _leftFoot, _rightFoot;
   Foot _activeFoot, _inactiveFoot;
+  Sound _growSound, _outchSound;
 
   Player() {
     x = 100;
@@ -34,6 +35,8 @@ class Player extends Sprite {
     addChild(_leftFoot);
     addChild(_body);
     addChild(_rightFoot);
+    _growSound = resourceManager.getSound('grow');
+    _outchSound = resourceManager.getSound('outch');
   }
 
   void step() {
@@ -64,6 +67,7 @@ class Player extends Sprite {
     game.stage.juggler.addTween(this, 0.5, Transition.easeOutQuadratic)
       ..animate.scaleX.to(_targetScale)
       ..animate.scaleY.to(_targetScale);
+    _growSound.play();
   }
 
   void shrink(num amount) {
@@ -72,6 +76,7 @@ class Player extends Sprite {
       ..animate.scaleX.to(_targetScale)
       ..animate.scaleY.to(_targetScale);
     _blinkTime = 0.8;
+    _outchSound.play();
   }
 
   num get activeFootPosition {

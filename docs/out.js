@@ -1279,7 +1279,7 @@
       }
     },
     SubListIterable: {
-      "^": "ListIterable;_iterable,__internal$_start,_endOrLength,$ti",
+      "^": "ListIterable;_iterable,_start,_endOrLength,$ti",
       get$_endIndex: function() {
         var $length = J.get$length$asx(this._iterable);
         return $length;
@@ -1287,7 +1287,7 @@
       get$_startIndex: function() {
         var $length, t1;
         $length = J.get$length$asx(this._iterable);
-        t1 = this.__internal$_start;
+        t1 = this._start;
         if (t1 > $length)
           return $length;
         return t1;
@@ -1295,7 +1295,7 @@
       get$length: function(_) {
         var $length, t1;
         $length = J.get$length$asx(this._iterable);
-        t1 = this.__internal$_start;
+        t1 = this._start;
         if (t1 >= $length)
           return 0;
         return $length - t1;
@@ -1319,7 +1319,7 @@
       },
       toList$1$growable: function(_, growable) {
         var start, t1, t2, end, $length, result, i, t3;
-        start = this.__internal$_start;
+        start = this._start;
         t1 = this._iterable;
         t2 = J.getInterceptor$asx(t1);
         end = t2.get$length(t1);
@@ -4240,9 +4240,9 @@
       $isMatch: 1
     },
     _AllMatchesIterable: {
-      "^": "IterableBase;_re,_string,_start",
+      "^": "IterableBase;_re,_string,__js_helper$_start",
       get$iterator: function(_) {
-        return new H._AllMatchesIterator(this._re, this._string, this._start, null);
+        return new H._AllMatchesIterator(this._re, this._string, this.__js_helper$_start, null);
       },
       $asIterableBase: function() {
         return [P.Match];
@@ -12712,7 +12712,7 @@
       }
     },
     GraphicsCommandRect: {
-      "^": "GraphicsCommand;_drawing$_x,_drawing$_y,_drawing$_width,_drawing$_height,_drawing$_graphics",
+      "^": "GraphicsCommand;_drawing$_x,_drawing$_y,_width,_height,_drawing$_graphics",
       get$x: function(_) {
         return this._drawing$_x;
       },
@@ -12720,16 +12720,16 @@
         return this._drawing$_y;
       },
       get$width: function(_) {
-        return this._drawing$_width;
+        return this._width;
       },
       get$height: function(_) {
-        return this._drawing$_height;
+        return this._height;
       },
       updateContext$1: function(context) {
         context.moveTo$2(0, this._drawing$_x, this._drawing$_y);
-        context.lineTo$2(0, this._drawing$_x + this._drawing$_width, this._drawing$_y);
-        context.lineTo$2(0, this._drawing$_x + this._drawing$_width, this._drawing$_y + this._drawing$_height);
-        context.lineTo$2(0, this._drawing$_x, this._drawing$_y + this._drawing$_height);
+        context.lineTo$2(0, this._drawing$_x + this._width, this._drawing$_y);
+        context.lineTo$2(0, this._drawing$_x + this._width, this._drawing$_y + this._height);
+        context.lineTo$2(0, this._drawing$_x, this._drawing$_y + this._height);
         context.closePath$0(0);
       },
       static: {
@@ -12741,13 +12741,13 @@
     GraphicsCommandStroke: {
       "^": "GraphicsCommand;",
       get$width: function(_) {
-        return this._drawing$_width;
+        return this._width;
       }
     },
     GraphicsCommandStrokeColor: {
-      "^": "GraphicsCommandStroke;_color,_drawing$_width,_jointStyle,_capsStyle,_drawing$_graphics",
+      "^": "GraphicsCommandStroke;_color,_width,_jointStyle,_capsStyle,_drawing$_graphics",
       updateContext$1: function(context) {
-        context.strokeColor$4(this._color, this._drawing$_width, this._jointStyle, this._capsStyle);
+        context.strokeColor$4(this._color, this._width, this._jointStyle, this._capsStyle);
       }
     },
     Graphics: {
@@ -15819,7 +15819,7 @@
         t1._soundTransform = new E.SoundTransform(1, 0);
         t1._audioElementSound = this;
         t1._media$_duration = duration;
-        t1._loop = loop;
+        t1._media$_loop = loop;
         this._requestAudioElement$1(t1).then$1(t1.get$_onAudioElement());
         return t1;
       },
@@ -15973,7 +15973,7 @@
       }
     },
     AudioElementSoundChannel: {
-      "^": "SoundChannel;_audioElementSound,_soundTransform,_audioElement,_volumeChangedSubscription,_completeTimer,_stopped,_paused,_loop,_startTime,_media$_duration,_media$_position,_eventStreams",
+      "^": "SoundChannel;_audioElementSound,_soundTransform,_audioElement,_volumeChangedSubscription,_completeTimer,_stopped,_paused,_media$_loop,_startTime,_media$_duration,_media$_position,_eventStreams",
       get$position: function(_) {
         var currentTime, t1;
         if (this._paused || this._stopped || this._audioElement == null)
@@ -16054,7 +16054,7 @@
       },
       _onCompleteTimer$0: [function() {
         if (!this._paused)
-          if (this._loop) {
+          if (this._media$_loop) {
             J.set$currentTime$x(this._audioElement, this._startTime);
             J.play$0$x(this._audioElement);
             this._startCompleteTimer$1(this._media$_duration);
@@ -16070,7 +16070,7 @@
         J.set$volume$x(t1, t2 * volume);
       }, "call$1", "get$_onVolumeChanged", 2, 0, 9],
       _onAudioEnded$0: function() {
-        if (!this._loop)
+        if (!this._media$_loop)
           this.stop$0(0);
       }
     },
@@ -16083,7 +16083,7 @@
         var t1 = new E.MockSoundChannel(null, false, false, false, 0, 0, 0, null, null);
         t1._mockSound = this;
         t1._soundTransform = new E.SoundTransform(1, 0);
-        t1._loop = loop;
+        t1._media$_loop = loop;
         return t1;
       },
       play$1: function($receiver, loop) {
@@ -16094,7 +16094,7 @@
       }
     },
     MockSoundChannel: {
-      "^": "SoundChannel;_mockSound,_stopped,_paused,_loop,_startTime,_media$_duration,_media$_position,_soundTransform,_eventStreams",
+      "^": "SoundChannel;_mockSound,_stopped,_paused,_media$_loop,_startTime,_media$_duration,_media$_position,_soundTransform,_eventStreams",
       set$paused: function(_, value) {
         this._paused = this._stopped || value;
       },
@@ -16136,7 +16136,7 @@
         t2._soundTransform = t3;
         t2._webAudioApiSound = this;
         t2._media$_duration = J.toDouble$0$n(t1);
-        t2._loop = loop;
+        t2._media$_loop = loop;
         t1 = E.WebAudioApiMixer$($.SoundMixer__webAudioApiMixer._volumeNode);
         t2._mixer = t1;
         t1._volumeNode.gain.value = Math.pow(t3.volume, 2);
@@ -16240,7 +16240,7 @@
       }
     },
     WebAudioApiSoundChannel: {
-      "^": "SoundChannel;_webAudioApiSound,_soundTransform,_mixer,_sourceNode,_sourceNodeEndedSubscription,_stopped,_paused,_loop,_startTime,_media$_duration,_media$_position,_timeOffset,_eventStreams",
+      "^": "SoundChannel;_webAudioApiSound,_soundTransform,_mixer,_sourceNode,_sourceNodeEndedSubscription,_stopped,_paused,_media$_loop,_startTime,_media$_duration,_media$_position,_timeOffset,_eventStreams",
       get$position: function(_) {
         var currentTime, t1, position, t2;
         if (this._paused || this._stopped)
@@ -16251,7 +16251,7 @@
           if (typeof currentTime !== "number")
             return currentTime.$sub();
           position = currentTime - t1;
-          t1 = this._loop;
+          t1 = this._media$_loop;
           t2 = this._media$_duration;
           return t1 ? C.JSDouble_methods.$mod(position, t2) : C.JSDouble_methods.clamp$2(position, 0, t2);
         }
@@ -16269,7 +16269,7 @@
               t1.cancel$0(0);
             t1 = this._sourceNode;
             (t1 && C.AudioBufferSourceNode_methods).stop$1(t1, 0);
-          } else if (this._loop) {
+          } else if (this._media$_loop) {
             this._paused = false;
             t1 = $.$get$WebAudioApiMixer_audioContext();
             t2 = t1.createBufferSource();
@@ -16321,7 +16321,7 @@
         }
       },
       _onEnded$1: [function(e) {
-        if (!this._paused && !this._stopped && !this._loop) {
+        if (!this._paused && !this._stopped && !this._media$_loop) {
           this._media$_position = this.get$position(this);
           this._stopped = true;
           this._paused = true;
@@ -16603,7 +16603,7 @@
       }
     },
     TextField: {
-      "^": "InteractiveObject;_text,_defaultTextFormat,_autoSize,_text$_type,_caretIndex,_caretLine,_caretTime,_caretX,_caretY,_caretWidth,_caretHeight,_wordWrap,_multiline,_displayAsPassword,_text$_background,_border,_passwordChar,_backgroundColor,_borderColor,_maxChars,_width,_height,_textWidth,_textHeight,_textLineMetrics,_refreshPending,_cacheAsBitmap,_renderTexture,_renderTextureQuad,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
+      "^": "InteractiveObject;_text,_defaultTextFormat,_autoSize,_text$_type,_caretIndex,_caretLine,_caretTime,_caretX,_caretY,_caretWidth,_caretHeight,_wordWrap,_multiline,_displayAsPassword,_text$_background,_border,_passwordChar,_backgroundColor,_borderColor,_maxChars,_text$_width,_text$_height,_textWidth,_textHeight,_textLineMetrics,_refreshPending,_cacheAsBitmap,_renderTexture,_renderTextureQuad,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       get$renderTexture: function() {
         return this._renderTexture;
       },
@@ -16618,11 +16618,11 @@
       },
       get$width: function(_) {
         this._refreshTextLineMetrics$0();
-        return this._width;
+        return this._text$_width;
       },
       get$height: function(_) {
         this._refreshTextLineMetrics$0();
-        return this._height;
+        return this._text$_height;
       },
       get$transformationMatrix: function() {
         this._refreshTextLineMetrics$0();
@@ -16630,22 +16630,22 @@
       },
       get$bounds: function() {
         this._refreshTextLineMetrics$0();
-        var t1 = this._width;
+        var t1 = this._text$_width;
         this._refreshTextLineMetrics$0();
-        return new U.Rectangle0(0, 0, t1, this._height, [P.num]);
+        return new U.Rectangle0(0, 0, t1, this._text$_height, [P.num]);
       },
       hitTestInput$2: function(localX, localY) {
         var t1;
         if (!(localX < 0)) {
           this._refreshTextLineMetrics$0();
-          t1 = localX >= this._width;
+          t1 = localX >= this._text$_width;
         } else
           t1 = true;
         if (t1)
           return;
         if (!(localY < 0)) {
           this._refreshTextLineMetrics$0();
-          t1 = localY >= this._height;
+          t1 = localY >= this._text$_height;
         } else
           t1 = true;
         if (t1)
@@ -16712,8 +16712,8 @@
           width.toString;
           textLineMetrics._text$_x = offsetX;
           textLineMetrics._text$_y = offsetY;
-          textLineMetrics._width = width;
-          textLineMetrics._height = textFormatSize;
+          textLineMetrics._text$_width = width;
+          textLineMetrics._text$_height = textFormatSize;
           textLineMetrics._ascent = fontStyleMetricsAscent;
           textLineMetrics._descent = fontStyleMetricsDescent;
           textLineMetrics._leading = textFormatLeading;
@@ -16730,34 +16730,34 @@
         this._textHeight += t2;
         autoWidth = C.JSNumber_methods.ceil$0(t3);
         autoHeight = C.JSNumber_methods.ceil$0(this._textHeight);
-        t2 = this._width;
-        if (t2 !== autoWidth || this._height !== autoHeight)
+        t2 = this._text$_width;
+        if (t2 !== autoWidth || this._text$_height !== autoHeight)
           switch (this._autoSize) {
             case "left":
-              this._width = autoWidth;
-              this._height = autoHeight;
+              this._text$_width = autoWidth;
+              this._text$_height = autoHeight;
               t2 = autoWidth;
               break;
             case "right":
-              this.super$DisplayObject$x(0, J.$sub$n(A.DisplayObject.prototype.get$x.call(this, this), autoWidth - this._width));
-              this._width = autoWidth;
-              this._height = autoHeight;
+              this.super$DisplayObject$x(0, J.$sub$n(A.DisplayObject.prototype.get$x.call(this, this), autoWidth - this._text$_width));
+              this._text$_width = autoWidth;
+              this._text$_height = autoHeight;
               t2 = autoWidth;
               break;
             case "center":
-              this.super$DisplayObject$x(0, J.$sub$n(A.DisplayObject.prototype.get$x.call(this, this), (autoWidth - this._width) / 2));
-              this._width = autoWidth;
-              this._height = autoHeight;
+              this.super$DisplayObject$x(0, J.$sub$n(A.DisplayObject.prototype.get$x.call(this, this), (autoWidth - this._text$_width) / 2));
+              this._text$_width = autoWidth;
+              this._text$_height = autoHeight;
               t2 = autoWidth;
               break;
           }
         availableWidth = t2 - textFormatLeftMargin - textFormatRightMargin;
         switch (textFormatVerticalAlign) {
           case "center":
-            heightOffset = (this._height - this._textHeight) / 2;
+            heightOffset = (this._text$_height - this._textHeight) / 2;
             break;
           case "bottom":
-            heightOffset = this._height - this._textHeight - textFormatStrokeWidth;
+            heightOffset = this._text$_height - this._textHeight - textFormatStrokeWidth;
             break;
           default:
             heightOffset = textFormatStrokeWidth;
@@ -16767,11 +16767,11 @@
           switch (textFormatAlign) {
             case "center":
             case "justify":
-              textLineMetrics._text$_x = textLineMetrics._text$_x + (availableWidth - textLineMetrics._width) / 2;
+              textLineMetrics._text$_x = textLineMetrics._text$_x + (availableWidth - textLineMetrics._text$_width) / 2;
               break;
             case "right":
             case "end":
-              textLineMetrics._text$_x = textLineMetrics._text$_x + (availableWidth - textLineMetrics._width);
+              textLineMetrics._text$_x = textLineMetrics._text$_x + (availableWidth - textLineMetrics._text$_width);
               break;
             default:
               textLineMetrics._text$_x += textFormatStrokeWidth;
@@ -16797,11 +16797,11 @@
               break;
             }
           }
-          for (t2 = this._caretX, t3 = this._width, t4 = t3 * 0.2, shiftX = 0; shiftX + t2 > t3;)
+          for (t2 = this._caretX, t3 = this._text$_width, t4 = t3 * 0.2, shiftX = 0; shiftX + t2 > t3;)
             shiftX -= t4;
           for (; shiftX + t2 < 0;)
             shiftX += t4;
-          for (t3 = this._caretY, t4 = this._caretHeight, t5 = this._height, shiftY = 0; shiftY + t3 + t4 > t5;)
+          for (t3 = this._caretY, t4 = this._caretHeight, t5 = this._text$_height, shiftY = 0; shiftY + t3 + t4 > t5;)
             shiftY -= textFormatSize;
           for (; shiftY + t3 < 0;)
             shiftY += textFormatSize;
@@ -16832,8 +16832,8 @@
         if ((t1 & 2) === 0)
           return;
         this._refreshPending = t1 & 253;
-        width = C.JSNumber_methods.ceil$0(Math.max(1, this._width * pixelRatioGlobal));
-        height = C.JSNumber_methods.ceil$0(Math.max(1, this._height * pixelRatioGlobal));
+        width = C.JSNumber_methods.ceil$0(Math.max(1, this._text$_width * pixelRatioGlobal));
+        height = C.JSNumber_methods.ceil$0(Math.max(1, this._text$_height * pixelRatioGlobal));
         t1 = this._renderTexture;
         if (t1 == null) {
           t1 = L.RenderTexture$(width, height, 16777215);
@@ -16852,7 +16852,7 @@
         context = J.get$context2D$x(t1.get$canvas(t1));
         t1 = matrix._data;
         context.setTransform(t1[0], t1[1], t1[2], t1[3], t1[4], t1[5]);
-        context.clearRect(0, 0, this._width, this._height);
+        context.clearRect(0, 0, this._text$_width, this._text$_height);
         this._renderText$1(context);
         this._renderTexture.update$0(0);
       },
@@ -16863,7 +16863,7 @@
         lineWidth = C.JSDouble_methods.ceil$0(t1 / 20);
         context.save();
         context.beginPath();
-        context.rect(0, 0, this._width, this._height);
+        context.rect(0, 0, this._text$_width, this._text$_height);
         context.clip();
         context.font = textFormat.get$_cssFontStyle() + " ";
         context.textAlign = "start";
@@ -17037,12 +17037,9 @@
         }
       }, "call$1", "get$_onMouseDown", 2, 0, 28],
       TextField$2: function(text, textFormat) {
-        var t1;
-        this._text = text;
-        this._caretIndex = text.length;
-        t1 = this._refreshPending |= 3;
+        this.set$text(0, text);
         this._defaultTextFormat = new Y.TextFormat(textFormat.font, textFormat.size, textFormat.color, textFormat.strokeWidth, textFormat.strokeColor, textFormat.fillGradient, textFormat.weight, false, false, false, textFormat.align, textFormat.verticalAlign, textFormat.topMargin, textFormat.bottomMargin, textFormat.leftMargin, textFormat.rightMargin, textFormat.indent, textFormat.leading);
-        this._refreshPending = t1 | 3;
+        this._refreshPending |= 3;
         this.on$1(0, "keyDown").listen$1(this.get$_text$_onKeyDown());
         this.on$1(0, "textInput").listen$1(this.get$_onTextInput());
         this.on$1(0, "mouseDown").listen$1(this.get$_onMouseDown());
@@ -17067,7 +17064,7 @@
       }
     },
     TextLineMetrics: {
-      "^": "Object;_text,_textIndex,_text$_x,_text$_y,_width,_height,_ascent,_descent,_leading,_indent",
+      "^": "Object;_text,_textIndex,_text$_x,_text$_y,_text$_width,_text$_height,_ascent,_descent,_leading,_indent",
       get$x: function(_) {
         return this._text$_x;
       },
@@ -17075,10 +17072,10 @@
         return this._text$_y;
       },
       get$width: function(_) {
-        return this._width;
+        return this._text$_width;
       },
       get$height: function(_) {
-        return this._height;
+        return this._text$_height;
       },
       get$ascent: function() {
         return this._ascent;
@@ -17144,6 +17141,18 @@
               t2 = $.resourceManager;
               t2.toString;
               t2._addResource$4("Sound", "third", "sounds/third.ogg", E.Sound_load("sounds/third.ogg", null));
+              t2 = $.resourceManager;
+              t2.toString;
+              t2._addResource$4("Sound", "loop", "sounds/loop.ogg", E.Sound_load("sounds/loop.ogg", null));
+              t2 = $.resourceManager;
+              t2.toString;
+              t2._addResource$4("Sound", "grow", "sounds/grow.ogg", E.Sound_load("sounds/grow.ogg", null));
+              t2 = $.resourceManager;
+              t2.toString;
+              t2._addResource$4("Sound", "outch", "sounds/outch.ogg", E.Sound_load("sounds/outch.ogg", null));
+              t2 = $.resourceManager;
+              t2.toString;
+              t2._addResource$4("Sound", "end", "sounds/end.ogg", E.Sound_load("sounds/end.ogg", null));
               $async$goto = 2;
               return P._asyncAwait($.resourceManager.load$0(0), $async$main);
             case 2:
@@ -17200,14 +17209,173 @@
     },
     Game: {
       "^": "Object;_stage,_main$_renderLoop,_currentLevel",
+      newLevel$0: function() {
+        var t1, t2, t3, t4, t5, t6, t7;
+        this._stage.removeChildren$0();
+        t1 = [A.DisplayObject];
+        t2 = H.setRuntimeTypeInfo([], t1);
+        t3 = $.DisplayObject__nextID;
+        $.DisplayObject__nextID = t3 + 1;
+        t4 = [A.BitmapFilter];
+        t3 = new K.Level(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+        t2 = [U.GraphicsCommand];
+        t5 = H.setRuntimeTypeInfo([], t2);
+        t6 = H.setRuntimeTypeInfo([], t2);
+        t7 = $.DisplayObject__nextID;
+        $.DisplayObject__nextID = t7 + 1;
+        t3._backgroundColorShape = new A.Shape(new U.Graphics(t5, t6, null), t7, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+        t7 = $.$get$Level_BACKGROUND_COLORS()[0];
+        t3._oldBackgroundColor = t7;
+        t3._targetBackgroundColor = t7;
+        t3._backgroundColorTime = 0;
+        t3._updateBackgroundColor$2(0, true);
+        t3.addChild$1(t3._backgroundColorShape);
+        t7 = H.setRuntimeTypeInfo([], t1);
+        t6 = $.DisplayObject__nextID;
+        $.DisplayObject__nextID = t6 + 1;
+        t6 = new A.Sprite(null, null, null, t7, true, true, false, true, "auto", true, 0, t6, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+        t3._floor = t6;
+        t3._drawFloor$1(t6.get$graphics());
+        t3.addChild$1(t3._floor);
+        t6 = H.setRuntimeTypeInfo([], t1);
+        t7 = $.DisplayObject__nextID;
+        $.DisplayObject__nextID = t7 + 1;
+        t7 = new A.Sprite(null, null, null, t6, true, true, false, true, "auto", true, 0, t7, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+        t3._background = t7;
+        t3._parallaxDistance = 0;
+        t3._drawBackgroundShapes$2(t7.get$graphics(), 0);
+        t3._drawBackgroundShapes$2(t3._background.get$graphics(), 800);
+        t3.addChild$1(t3._background);
+        t7 = H.setRuntimeTypeInfo([], t1);
+        t6 = $.DisplayObject__nextID;
+        $.DisplayObject__nextID = t6 + 1;
+        t6 = new A.Sprite(null, null, null, t7, true, true, false, true, "auto", true, 0, t6, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+        t3._levelContainer = t6;
+        t3.addChild$1(t6);
+        t6 = K.Player$();
+        t3._player = t6;
+        t3._levelContainer.addChild$1(t6);
+        t3._items = H.setRuntimeTypeInfo([], [K.Item]);
+        t3._lastItemPosition = 0;
+        t3._destroyedHouses = 0;
+        t3._destroyedCars = 0;
+        t3._destroyedCacti = 0;
+        t3._playingTime = -120;
+        t3._shakeTime = 0;
+        t6 = H.setRuntimeTypeInfo([], t1);
+        t7 = $.DisplayObject__nextID;
+        $.DisplayObject__nextID = t7 + 1;
+        t7 = new A.Sprite(null, null, null, t6, true, true, false, true, "auto", true, 0, t7, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+        t3._progressBar = t7;
+        t3.addChild$1(t7);
+        t7 = H.setRuntimeTypeInfo([], t2);
+        t2 = H.setRuntimeTypeInfo([], t2);
+        t6 = $.DisplayObject__nextID;
+        $.DisplayObject__nextID = t6 + 1;
+        t6 = new A.Shape(new U.Graphics(t7, t2, null), t6, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+        t3._progressBarHead = t6;
+        t3._progressBar.addChild$1(t6);
+        t3._drawProgressBarHead$1(t3._progressBarHead.graphics);
+        t3._updateProgressBar$1(t3._progressBar.get$graphics());
+        t6 = Y.TextField$("", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
+        t6.set$x(0, 650);
+        t6.set$y(0, 60);
+        t6._text$_width = 800;
+        t6._refreshPending |= 3;
+        t3._timer = t6;
+        t3.addChild$1(t6);
+        t6 = $.$get$MagicPotion_bitmapData();
+        t2 = H.setRuntimeTypeInfo([], t1);
+        t7 = $.DisplayObject__nextID;
+        $.DisplayObject__nextID = t7 + 1;
+        t7 = new K.MagicPotion(0.1, t3, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t7, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+        t7.Item$3(t3, t6, 900);
+        t3._items.push(t7);
+        t3._levelContainer.addChild$1(t7);
+        t7 = $.$get$Cactus_bitmapData();
+        t6 = H.setRuntimeTypeInfo([], t1);
+        t2 = $.DisplayObject__nextID;
+        $.DisplayObject__nextID = t2 + 1;
+        t2 = new K.Cactus(null, t3, null, null, null, null, t6, true, true, false, true, "auto", true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+        t2.Item$3(t3, t7, 1400);
+        t3._items.push(t2);
+        t3._levelContainer.addChild$1(t2);
+        t2 = t3._background;
+        t7 = Y.TextField$("Hurry up, school starts at 8! \u25b6", new Y.TextFormat("Raleway", 45, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
+        t7.set$x(0, 30);
+        t7.set$y(0, 50);
+        t7._text$_width = 800;
+        t7._refreshPending |= 3;
+        t2.addChild$1(t7);
+        t7 = t3._levelContainer;
+        t2 = Y.TextField$("\u25bc This is Guy.", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
+        t2.set$x(0, 90);
+        t2.set$y(0, 370);
+        t2._text$_width = 800;
+        t2._refreshPending |= 3;
+        t7.addChild$1(t2);
+        t2 = t3._levelContainer;
+        t7 = Y.TextField$("Press [SPACE] or click to take a step.", new Y.TextFormat("Raleway", 30, 4292730333, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
+        t7.set$x(0, 150);
+        t7.set$y(0, 530);
+        t7._text$_width = 800;
+        t7._refreshPending |= 3;
+        t2.addChild$1(t7);
+        t7 = t3._levelContainer;
+        t2 = Y.TextField$("\u25bc Oh look, a magic potion!", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
+        t2.set$x(0, 915);
+        t2.set$y(0, 350);
+        t2._text$_width = 800;
+        t2._refreshPending |= 3;
+        t7.addChild$1(t2);
+        t2 = t3._levelContainer;
+        t7 = Y.TextField$("\u25bc Don't step on this!", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
+        t7.set$x(0, 1410);
+        t7.set$y(0, 380);
+        t7._text$_width = 800;
+        t7._refreshPending |= 3;
+        t2.addChild$1(t7);
+        t7 = $.$get$Goal_bitmapData();
+        t1 = H.setRuntimeTypeInfo([], t1);
+        t2 = $.DisplayObject__nextID;
+        $.DisplayObject__nextID = t2 + 1;
+        t4 = new K.Goal(t3, null, null, null, null, t1, true, true, false, true, "auto", true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+        t4.Item$3(t3, t7, 40000);
+        t3._items.push(t4);
+        t3._levelContainer.addChild$1(t4);
+        t3._playerSize = 0;
+        t3._won = false;
+        t3._spaceDown = false;
+        t3._firstLoop = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "first"), "$isSound");
+        t3._secondLoop = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "second"), "$isSound");
+        t3._thirdLoop = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "third"), "$isSound");
+        t3._loop = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "loop"), "$isSound");
+        t3._endSound = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "end"), "$isSound");
+        this._currentLevel = t3;
+        this._stage.addChild$1(t3);
+      },
       _update$1: [function(_, e) {
-        var t1, t2, t3, distance, t4, t5, t6, t7, feetDifference;
+        var t1, t2, t3, time, hours, minutes, seconds, t4, distance, t5, t6, t7, feetDifference;
         t1 = this._currentLevel;
         t2 = e.get$passedTime();
         t3 = t1._playingTime;
         if (typeof t3 !== "number")
           return t3.$add();
-        t1._playingTime = t3 + t2;
+        t3 += t2;
+        t1._playingTime = t3;
+        if (t3 - t2 < 0 && t3 >= 0) {
+          t1._targetBackgroundColor = $.$get$Level_BACKGROUND_COLORS()[1];
+          t1._backgroundColorTime = 1;
+        }
+        time = 28800 + t3;
+        hours = C.JSNumber_methods._tdivFast$1(time, 3600);
+        minutes = C.JSNumber_methods._tdivFast$1(C.JSNumber_methods.$mod(time, 3600), 60);
+        seconds = C.JSInt_methods.$mod(C.JSNumber_methods.floor$0(time), 60);
+        t3 = t1._timer;
+        t4 = hours < 10 ? "0" : "";
+        t4 = t4 + H.S(hours) + ":";
+        t4 = t4 + (minutes < 10 ? "0" : "") + H.S(minutes) + ":";
+        t3.set$text(0, t4 + (seconds < 10 ? "0" : "") + seconds);
         distance = Math.sqrt(Math.max(t1._player._x - 100 + t1._levelContainer._x, 0)) * 40 * t2;
         t3 = t1._player.get$activeFootPosition();
         t4 = t1._levelContainer;
@@ -17231,61 +17399,8 @@
           t1._drawBackgroundShapes$2(t1._background.get$graphics(), 800);
           t1._parallaxDistance = 0;
         }
-        if (t1._levelContainer._x < -800) {
-          t3 = $.random.nextDouble$0();
-          t4 = distance * 0.002;
-          t5 = t1._playerSize;
-          if (typeof t5 !== "number")
-            return H.iae(t5);
-          if (t3 < t4 * (3 - t5)) {
-            t3 = $.$get$MagicPotion_bitmapData();
-            t5 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
-            t6 = $.DisplayObject__nextID;
-            $.DisplayObject__nextID = t6 + 1;
-            t6 = new K.MagicPotion(0.05, t1, null, null, null, null, t5, true, true, false, true, "auto", true, 0, t6, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-            t6.Item$3(t1, t3, null);
-            t1._items.push(t6);
-            t1._levelContainer.addChild$1(t6);
-          }
-          t3 = t1._playerSize;
-          if (typeof t3 !== "number")
-            return t3.$ge();
-          if (t3 >= 2)
-            if ($.random.nextDouble$0() < distance * 0.0005) {
-              t3 = $.$get$House_bitmapData();
-              t5 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
-              t6 = $.DisplayObject__nextID;
-              $.DisplayObject__nextID = t6 + 1;
-              t6 = new K.House(t1, null, null, null, null, t5, true, true, false, true, "auto", true, 0, t6, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-              t6.Item$3(t1, t3, null);
-              t1._items.push(t6);
-              t1._levelContainer.addChild$1(t6);
-            }
-          t3 = t1._playerSize;
-          if (typeof t3 !== "number")
-            return t3.$ge();
-          if (t3 >= 1) {
-            if ($.random.nextDouble$0() < distance * 0.001) {
-              t3 = $.$get$Car_bitmapData();
-              t4 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
-              t5 = $.DisplayObject__nextID;
-              $.DisplayObject__nextID = t5 + 1;
-              t5 = new K.Car(t1, null, null, null, null, t4, true, true, false, true, "auto", true, 0, t5, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-              t5.Item$3(t1, t3, null);
-              t1._items.push(t5);
-              t1._levelContainer.addChild$1(t5);
-            }
-          } else if ($.random.nextDouble$0() < t4) {
-            t3 = $.$get$Cactus_bitmapData();
-            t4 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
-            t5 = $.DisplayObject__nextID;
-            $.DisplayObject__nextID = t5 + 1;
-            t5 = new K.Cactus(null, t1, null, null, null, null, t4, true, true, false, true, "auto", true, 0, t5, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-            t5.Item$3(t1, t3, null);
-            t1._items.push(t5);
-            t1._levelContainer.addChild$1(t5);
-          }
-        }
+        if (t1._levelContainer._x < -800)
+          t1._spawnItems$1(distance);
         t3 = t1._player;
         if (t3._activeFoot != null && t3._inactiveFoot != null) {
           t4 = Math.sqrt(t3._scaleX);
@@ -17329,38 +17444,14 @@
         t1._checkItemsOffScreen$0();
         t1._updateProgressBar$1(t1._progressBar.get$graphics());
         t3 = t1._player._scaleY;
-        if (t3 >= 1) {
-          if (t1._playerSize !== 2) {
+        if (t3 >= 0.8) {
+          if (t1._playerSize !== 2)
             t1._playerSize = 2;
-            t1._playLoop$1(t1._thirdLoop);
-            t3 = $.$get$Level_BACKGROUND_COLORS();
-            t4 = t1._playerSize;
-            if (t4 >>> 0 !== t4 || t4 >= 3)
-              return H.ioore(t3, t4);
-            t1._targetBackgroundColor = t3[t4];
-            t1._backgroundColorTime = 1;
-          }
         } else if (t3 >= 0.5) {
-          if (t1._playerSize !== 1) {
+          if (t1._playerSize !== 1)
             t1._playerSize = 1;
-            t1._playLoop$1(t1._secondLoop);
-            t3 = $.$get$Level_BACKGROUND_COLORS();
-            t4 = t1._playerSize;
-            if (t4 >>> 0 !== t4 || t4 >= 3)
-              return H.ioore(t3, t4);
-            t1._targetBackgroundColor = t3[t4];
-            t1._backgroundColorTime = 1;
-          }
-        } else if (t1._playerSize !== 0) {
+        } else if (t1._playerSize !== 0)
           t1._playerSize = 0;
-          t1._playLoop$1(t1._firstLoop);
-          t3 = $.$get$Level_BACKGROUND_COLORS();
-          t4 = t1._playerSize;
-          if (t4 >>> 0 !== t4 || t4 >= 3)
-            return H.ioore(t3, t4);
-          t1._targetBackgroundColor = t3[t4];
-          t1._backgroundColorTime = 1;
-        }
         t3 = t1._shakeTime;
         if (typeof t3 !== "number")
           return t3.$gt();
@@ -17395,7 +17486,8 @@
         if (t2 === 32 && t1._spaceDown !== true) {
           t1._spaceDown = true;
           t1._step$0();
-        }
+        } else if (t1._won === true && t2 === 82)
+          $.game.newLevel$0();
       }, "call$1", "get$_onKeyDown", 2, 0, 7],
       _onKeyUp$1: [function(e) {
         var t1, t2;
@@ -17409,7 +17501,7 @@
         this._currentLevel._step$0();
       }, "call$1", "get$_onTouchStart", 2, 0, 13],
       Game$1: function(canvas) {
-        var t1, t2, t3, t4, t5, t6, t7;
+        var t1, t2, t3, t4;
         this._stage = A.Stage$(canvas, 600, new A.StageOptions(C.RenderEngine_0, C.InputEventMode_0, C.StageRenderMode_0, C.StageScaleMode_3, C.StageAlign_4, 4294967295, false, false, 5, true, true, false, false), 800);
         t1 = new K.Juggler(null, null, 0, new P._AsyncBroadcastStreamController(null, null, 0, null, null, null, null, [P.num]));
         t2 = new K._AnimatableLink(null, null);
@@ -17435,138 +17527,7 @@
         t1 = t1.get$onKeyUp(canvas);
         W._EventStreamSubscription$(t1._html$_target, t1._eventType, this.get$_onKeyUp(), false, H.getTypeArgumentByIndex(t1, 0));
         W._EventStreamSubscription$(canvas, "touchenter", this.get$_onTouchStart(), false, W.TouchEvent);
-        t1 = [A.DisplayObject];
-        t2 = H.setRuntimeTypeInfo([], t1);
-        t3 = $.DisplayObject__nextID;
-        $.DisplayObject__nextID = t3 + 1;
-        t4 = [A.BitmapFilter];
-        t3 = new K.Level(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-        t2 = [U.GraphicsCommand];
-        t5 = H.setRuntimeTypeInfo([], t2);
-        t6 = H.setRuntimeTypeInfo([], t2);
-        t7 = $.DisplayObject__nextID;
-        $.DisplayObject__nextID = t7 + 1;
-        t3._backgroundColorShape = new A.Shape(new U.Graphics(t5, t6, null), t7, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-        t7 = $.$get$Level_BACKGROUND_COLORS()[0];
-        t3._oldBackgroundColor = t7;
-        t3._targetBackgroundColor = t7;
-        t3._backgroundColorTime = 0;
-        t3._updateBackgroundColor$2(0, true);
-        t3.addChild$1(t3._backgroundColorShape);
-        t7 = H.setRuntimeTypeInfo([], t1);
-        t6 = $.DisplayObject__nextID;
-        $.DisplayObject__nextID = t6 + 1;
-        t6 = new A.Sprite(null, null, null, t7, true, true, false, true, "auto", true, 0, t6, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-        t3._floor = t6;
-        t3._drawFloor$1(t6.get$graphics());
-        t3.addChild$1(t3._floor);
-        t6 = H.setRuntimeTypeInfo([], t1);
-        t7 = $.DisplayObject__nextID;
-        $.DisplayObject__nextID = t7 + 1;
-        t7 = new A.Sprite(null, null, null, t6, true, true, false, true, "auto", true, 0, t7, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-        t3._background = t7;
-        t3._parallaxDistance = 0;
-        t3._drawBackgroundShapes$2(t7.get$graphics(), 0);
-        t3._drawBackgroundShapes$2(t3._background.get$graphics(), 800);
-        t3.addChild$1(t3._background);
-        t7 = H.setRuntimeTypeInfo([], t1);
-        t6 = $.DisplayObject__nextID;
-        $.DisplayObject__nextID = t6 + 1;
-        t6 = new A.Sprite(null, null, null, t7, true, true, false, true, "auto", true, 0, t6, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-        t3._levelContainer = t6;
-        t3.addChild$1(t6);
-        t6 = K.Player$();
-        t3._player = t6;
-        t3._levelContainer.addChild$1(t6);
-        t3._items = H.setRuntimeTypeInfo([], [K.Item]);
-        t3._destroyedHouses = 0;
-        t3._destroyedCars = 0;
-        t3._destroyedCacti = 0;
-        t3._playingTime = 0;
-        t3._shakeTime = 0;
-        t6 = H.setRuntimeTypeInfo([], t1);
-        t7 = $.DisplayObject__nextID;
-        $.DisplayObject__nextID = t7 + 1;
-        t7 = new A.Sprite(null, null, null, t6, true, true, false, true, "auto", true, 0, t7, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-        t3._progressBar = t7;
-        t3.addChild$1(t7);
-        t7 = H.setRuntimeTypeInfo([], t2);
-        t2 = H.setRuntimeTypeInfo([], t2);
-        t6 = $.DisplayObject__nextID;
-        $.DisplayObject__nextID = t6 + 1;
-        t6 = new A.Shape(new U.Graphics(t7, t2, null), t6, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-        t3._progressBarHead = t6;
-        t3._progressBar.addChild$1(t6);
-        t3._drawProgressBarHead$1(t3._progressBarHead.graphics);
-        t3._updateProgressBar$1(t3._progressBar.get$graphics());
-        t6 = $.$get$MagicPotion_bitmapData();
-        t2 = H.setRuntimeTypeInfo([], t1);
-        t7 = $.DisplayObject__nextID;
-        $.DisplayObject__nextID = t7 + 1;
-        t7 = new K.MagicPotion(0.1, t3, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t7, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-        t7.Item$3(t3, t6, 900);
-        t3._items.push(t7);
-        t3._levelContainer.addChild$1(t7);
-        t7 = $.$get$Cactus_bitmapData();
-        t6 = H.setRuntimeTypeInfo([], t1);
-        t2 = $.DisplayObject__nextID;
-        $.DisplayObject__nextID = t2 + 1;
-        t2 = new K.Cactus(null, t3, null, null, null, null, t6, true, true, false, true, "auto", true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-        t2.Item$3(t3, t7, 1400);
-        t3._items.push(t2);
-        t3._levelContainer.addChild$1(t2);
-        t2 = t3._background;
-        t7 = Y.TextField$("What a beautiful day!", new Y.TextFormat("Raleway", 50, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
-        t7.set$x(0, 150);
-        t7.set$y(0, 50);
-        t7._width = 800;
-        t7._refreshPending |= 3;
-        t2.addChild$1(t7);
-        t7 = t3._levelContainer;
-        t2 = Y.TextField$("\u25bc This is you.", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
-        t2.set$x(0, 90);
-        t2.set$y(0, 370);
-        t2._width = 800;
-        t2._refreshPending |= 3;
-        t7.addChild$1(t2);
-        t2 = t3._levelContainer;
-        t7 = Y.TextField$("Press [SPACE] or click to take a step.", new Y.TextFormat("Raleway", 30, 4292730333, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
-        t7.set$x(0, 150);
-        t7.set$y(0, 530);
-        t7._width = 800;
-        t7._refreshPending |= 3;
-        t2.addChild$1(t7);
-        t7 = t3._levelContainer;
-        t2 = Y.TextField$("\u25bc I wonder what this potion\n     would do to you...", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
-        t2.set$x(0, 915);
-        t2.set$y(0, 350);
-        t2._width = 800;
-        t2._refreshPending |= 3;
-        t7.addChild$1(t2);
-        t2 = t3._levelContainer;
-        t7 = Y.TextField$("\u25bc Don't step on this!", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
-        t7.set$x(0, 1410);
-        t7.set$y(0, 380);
-        t7._width = 800;
-        t7._refreshPending |= 3;
-        t2.addChild$1(t7);
-        t7 = $.$get$Goal_bitmapData();
-        t1 = H.setRuntimeTypeInfo([], t1);
-        t2 = $.DisplayObject__nextID;
-        $.DisplayObject__nextID = t2 + 1;
-        t4 = new K.Goal(t3, null, null, null, null, t1, true, true, false, true, "auto", true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-        t4.Item$3(t3, t7, 40000);
-        t3._items.push(t4);
-        t3._levelContainer.addChild$1(t4);
-        t3._playerSize = 0;
-        t3._won = false;
-        t3._spaceDown = false;
-        t3._firstLoop = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "first"), "$isSound");
-        t3._secondLoop = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "second"), "$isSound");
-        t3._thirdLoop = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "third"), "$isSound");
-        t3._playLoop$1(t3._firstLoop);
-        this._currentLevel = t3;
-        this._stage.addChild$1(t3);
+        this.newLevel$0();
       },
       static: {
         Game$: function(canvas) {
@@ -17590,7 +17551,7 @@
         this.set$broken(false);
         this.setBitmap$1(bitmapData);
         if (x == null)
-          this.set$x(0, 800 - this.level._levelContainer._x + 300);
+          this.set$x(0, 800 - this.level._levelContainer._x);
         else
           this.set$x(0, x);
       }
@@ -17615,6 +17576,7 @@
         t3 = player._targetScale;
         t3.toString;
         t1._targetValue = t3;
+        player._growSound.play$0(0);
         this.setBitmap$1($.$get$MagicPotion_bitmapDataBroken());
       }
     },
@@ -17671,65 +17633,91 @@
         t1 = this.level;
         if (t1._won !== true) {
           t1._won = true;
-          t2 = Y.TextField$("You made it!", new Y.TextFormat("Raleway", 50, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
-          t2.set$x(0, 150);
+          t2 = t1._activeLoopChannel;
+          if (t2 != null)
+            t2.stop$0(0);
+          t1._endSound.play$0(0);
+          t1.removeChild$1(t1._timer);
+          t2 = Y.TextField$("Guy finally arrived at school!", new Y.TextFormat("Raleway", 50, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
+          t2.set$x(0, 70);
           t2.set$y(0, 50);
-          t2._width = 800;
+          t2._text$_width = 800;
           t2._refreshPending |= 3;
           t1.addChild$1(t2);
-          t2 = Y.TextField$("On your way to work you destroyed", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
+          t2 = Y.TextField$("On his way he demolished", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
           t2.set$x(0, 150);
           t2.set$y(0, 150);
-          t2._width = 800;
+          t2._text$_width = 800;
           t2._refreshPending |= 3;
           t1.addChild$1(t2);
           t2 = H.S(t1._destroyedCacti) + " cact";
           t2 = Y.TextField$(t2 + (t1._destroyedCacti === 1 ? "us" : "i"), new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
           t2.set$x(0, 180);
           t2.set$y(0, 180);
-          t2._width = 800;
+          t2._text$_width = 800;
           t2._refreshPending |= 3;
           t1.addChild$1(t2);
           t2 = H.S(t1._destroyedCars) + " car";
           t2 = Y.TextField$(t2 + (t1._destroyedCars === 1 ? "" : "s"), new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
           t2.set$x(0, 180);
           t2.set$y(0, 210);
-          t2._width = 800;
+          t2._text$_width = 800;
           t2._refreshPending |= 3;
           t1.addChild$1(t2);
           t2 = H.S(t1._destroyedHouses) + " house";
           t2 = Y.TextField$(t2 + (t1._destroyedHouses === 1 ? "" : "s"), new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
           t2.set$x(0, 180);
           t2.set$y(0, 240);
-          t2._width = 800;
+          t2._text$_width = 800;
           t2._refreshPending |= 3;
           t1.addChild$1(t2);
           t2 = t1._playingTime;
           if (typeof t2 !== "number")
-            return t2.$tdiv();
-          t2 = Y.TextField$("You took " + C.JSNumber_methods._tdivFast$1(t2, 60) + " min " + C.JSInt_methods.$mod(J.round$0$n(t1._playingTime), 60) + " s.", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
+            return t2.$lt();
+          if (t2 < 0) {
+            t2 = Y.TextField$("He is " + H.S(C.JSNumber_methods._tdivFast$1(-t2, 60)) + " min " + C.JSInt_methods.$mod(-J.round$0$n(t1._playingTime), 60) + " s early.", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
+            t2.set$x(0, 150);
+            t2.set$y(0, 300);
+            t2._text$_width = 800;
+            t2._refreshPending |= 3;
+            t1.addChild$1(t2);
+            t2 = Y.TextField$("Maybe he could've finished watching that episode of Monty Python after all...", new Y.TextFormat("Raleway", 15, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
+            t2.set$x(0, 150);
+            t2.set$y(0, 330);
+            t2._text$_width = 800;
+            t2._refreshPending |= 3;
+            t1.addChild$1(t2);
+          } else {
+            t2 = Y.TextField$("He is " + H.S(C.JSNumber_methods._tdivFast$1(t2, 60)) + " min " + C.JSInt_methods.$mod(J.round$0$n(t1._playingTime), 60) + " s late.", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
+            t2.set$x(0, 150);
+            t2.set$y(0, 300);
+            t2._text$_width = 800;
+            t2._refreshPending |= 3;
+            t1.addChild$1(t2);
+          }
+          t2 = Y.TextField$("[R] to play again.", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
           t2.set$x(0, 150);
-          t2.set$y(0, 300);
-          t2._width = 800;
+          t2.set$y(0, 400);
+          t2._text$_width = 800;
           t2._refreshPending |= 3;
           t1.addChild$1(t2);
           t2 = Y.TextField$("Thank you for playing!", new Y.TextFormat("Raleway", 40, 4292730333, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
           t2.set$x(0, 100);
           t2.set$y(0, 520);
-          t2._width = 800;
+          t2._text$_width = 800;
           t2._refreshPending |= 3;
           t1.addChild$1(t2);
           t2 = Y.TextField$("sophiakene & phi\nLudum Dare 40", new Y.TextFormat("Raleway", 20, 4292730333, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
           t2.set$x(0, 550);
           t2.set$y(0, 520);
-          t2._width = 800;
+          t2._text$_width = 800;
           t2._refreshPending |= 3;
           t1.addChild$1(t2);
         }
       }
     },
     Level: {
-      "^": "DisplayObjectContainer;_backgroundColorShape,_oldBackgroundColor,_targetBackgroundColor,_backgroundColorTime,_floor,_background,_parallaxDistance,_levelContainer,_player,_items,_destroyedCacti,_destroyedCars,_destroyedHouses,_playingTime,_shakeTime,_progressBar,_progressBarHead,_playerSize,_won,_spaceDown,_firstLoop,_secondLoop,_thirdLoop,_activeLoopChannel,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
+      "^": "DisplayObjectContainer;_backgroundColorShape,_oldBackgroundColor,_targetBackgroundColor,_backgroundColorTime,_floor,_background,_parallaxDistance,_levelContainer,_player,_items,_lastItemPosition,_destroyedCacti,_destroyedCars,_destroyedHouses,_playingTime,_shakeTime,_progressBar,_progressBarHead,_timer,_playerSize,_won,_spaceDown,_firstLoop,_secondLoop,_thirdLoop,_loop,_activeLoopChannel,_endSound,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       _checkItemCollisions$0: function() {
         var i, t1, item, t2, t3, t4, t5, footX, rectangle;
         for (i = 0; t1 = this._items, i < t1.length; ++i) {
@@ -17768,6 +17756,75 @@
             (t1 && C.JSArray_methods).remove$1(t1, item);
             this._levelContainer.removeChild$1(item);
             --i;
+          }
+        }
+      },
+      _spawnItems$1: function(distanceScrolled) {
+        var t1, t2, t3;
+        t1 = this._lastItemPosition;
+        t2 = this._levelContainer._x;
+        if (typeof t1 !== "number")
+          return t1.$lt();
+        if (t1 < -t2 + 800 - 50) {
+          t1 = this._playerSize;
+          if (typeof t1 !== "number")
+            return t1.$ge();
+          if (t1 >= 2)
+            if ($.random.nextDouble$0() < distanceScrolled * 0.0005) {
+              t1 = $.$get$House_bitmapData();
+              t2 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
+              t3 = $.DisplayObject__nextID;
+              $.DisplayObject__nextID = t3 + 1;
+              t3 = new K.House(this, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+              t3.Item$3(this, t1, null);
+              this._items.push(t3);
+              this._levelContainer.addChild$1(t3);
+              this._lastItemPosition = 800 - this._levelContainer._x + 200;
+              return;
+            }
+          t1 = this._playerSize;
+          if (typeof t1 !== "number")
+            return t1.$ge();
+          if (t1 >= 1) {
+            if ($.random.nextDouble$0() < distanceScrolled * 0.001) {
+              t1 = $.$get$Car_bitmapData();
+              t2 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
+              t3 = $.DisplayObject__nextID;
+              $.DisplayObject__nextID = t3 + 1;
+              t3 = new K.Car(this, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+              t3.Item$3(this, t1, null);
+              this._items.push(t3);
+              this._levelContainer.addChild$1(t3);
+              this._lastItemPosition = 800 - this._levelContainer._x + 100;
+              return;
+            }
+          } else if ($.random.nextDouble$0() < distanceScrolled * 0.002) {
+            t1 = $.$get$Cactus_bitmapData();
+            t2 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
+            t3 = $.DisplayObject__nextID;
+            $.DisplayObject__nextID = t3 + 1;
+            t3 = new K.Cactus(null, this, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+            t3.Item$3(this, t1, null);
+            this._items.push(t3);
+            this._levelContainer.addChild$1(t3);
+            this._lastItemPosition = 800 - this._levelContainer._x + 50;
+            return;
+          }
+          t1 = $.random.nextDouble$0();
+          t2 = this._playerSize;
+          if (typeof t2 !== "number")
+            return H.iae(t2);
+          if (t1 < distanceScrolled * 0.001 * (3 - t2)) {
+            t1 = $.$get$MagicPotion_bitmapData();
+            t2 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
+            t3 = $.DisplayObject__nextID;
+            $.DisplayObject__nextID = t3 + 1;
+            t3 = new K.MagicPotion(0.1, this, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+            t3.Item$3(this, t1, null);
+            this._items.push(t3);
+            this._levelContainer.addChild$1(t3);
+            this._lastItemPosition = 800 - this._levelContainer._x + 50;
+            return;
           }
         }
       },
@@ -17874,14 +17931,12 @@
         graphics.fillColor$1(4280470562);
         this._progressBarHead.set$x(0, t1);
       },
-      _playLoop$1: function(loop) {
-        var t1 = this._activeLoopChannel;
-        if (t1 != null)
-          t1.stop$0(0);
-        this._activeLoopChannel = loop.play$1(0, true);
-      },
       _step$0: function() {
         var t1, t2, t3, temp;
+        if (this._activeLoopChannel == null) {
+          t1 = this._loop;
+          this._activeLoopChannel = t1.play$1(0, true);
+        }
         t1 = this._player;
         t2 = t1._activeFoot;
         if (t2 == null || t1._inactiveFoot == null) {
@@ -17937,7 +17992,7 @@
       }
     },
     Player: {
-      "^": "Sprite;_targetScale,_blinkTime,_leftLeg,_body,_leftFoot,_rightFoot,_activeFoot,_inactiveFoot,_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
+      "^": "Sprite;_targetScale,_blinkTime,_leftLeg,_body,_leftFoot,_rightFoot,_activeFoot,_inactiveFoot,_growSound,_outchSound,_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       shrink$1: function(amount) {
         var t1, t2, t3;
         t1 = this._targetScale;
@@ -17956,6 +18011,7 @@
         t3.toString;
         t1._targetValue = t3;
         this._blinkTime = 0.8;
+        this._outchSound.play$0(0);
       },
       get$activeFootPosition: function() {
         var t1, t2, t3, t4, t5;
@@ -18173,6 +18229,8 @@
         this.addChild$1(this._leftFoot);
         this.addChild$1(this._body);
         this.addChild$1(this._rightFoot);
+        this._growSound = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "grow"), "$isSound");
+        this._outchSound = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "outch"), "$isSound");
       },
       static: {
         Player$: function() {
@@ -18180,7 +18238,7 @@
           t1 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
           t2 = $.DisplayObject__nextID;
           $.DisplayObject__nextID = t2 + 1;
-          t2 = new K.Player(null, null, null, null, null, null, null, null, null, null, null, t1, true, true, false, true, "auto", true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+          t2 = new K.Player(null, null, null, null, null, null, null, null, null, null, null, null, null, t1, true, true, false, true, "auto", true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
           t2.Player$0();
           return t2;
         }
@@ -18769,7 +18827,7 @@
   }, "House_bitmapDataBroken", "Goal_bitmapData", "$get$Goal_bitmapData", function() {
     return $.resourceManager.getBitmapData$1("goal");
   }, "Goal_bitmapData", "Level_BACKGROUND_COLORS", "$get$Level_BACKGROUND_COLORS", function() {
-    return [4290502143, 4292721629, 4292712857];
+    return [4290502143, 4292712857];
   }, "Level_BACKGROUND_COLORS"]);
   Isolate = Isolate.$finishIsolateConstructor(Isolate);
   $ = new Isolate();

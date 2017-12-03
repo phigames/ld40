@@ -55,4 +55,8 @@ void addResources() {
   resourceManager.addSound('first', 'sounds/first.ogg');
   resourceManager.addSound('second', 'sounds/second.ogg');
   resourceManager.addSound('third', 'sounds/third.ogg');
+  resourceManager.addSound('loop', 'sounds/loop.ogg');
+  resourceManager.addSound('grow', 'sounds/grow.ogg');
+  resourceManager.addSound('outch', 'sounds/outch.ogg');
+  resourceManager.addSound('end', 'sounds/end.ogg');
 }

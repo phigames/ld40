@@ -22,6 +22,11 @@ class Game {
     canvas.onKeyDown.listen(_onKeyDown);
     canvas.onKeyUp.listen(_onKeyUp);
     canvas.onTouchEnter.listen(_onTouchStart);
+    newLevel();
+  }
+
+  void newLevel() {
+    _stage.removeChildren();
     _currentLevel = new Level();
     _stage.addChild(_currentLevel);
   }
