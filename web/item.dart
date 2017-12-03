@@ -20,7 +20,7 @@ abstract class Item extends Sprite {
     y = Level.GROUND_Y - height;
   }
 
-  void onCollide(Player player);
+  void onCollide(Player player, int playerSize);
 
 }
 
@@ -34,7 +34,7 @@ class MagicPotion extends Item {
   MagicPotion(Level level, [num x = null, this.growAmount = 0.05]) : super(level, bitmapData, x);
 
   @override
-  void onCollide(Player player) {
+  void onCollide(Player player, int playerSize) {
     broken = true;
     player.grow(growAmount);
     setBitmap(bitmapDataBroken);
@@ -52,7 +52,7 @@ class Cactus extends Item {
   Cactus(Level level, [num x = null]) : super(level, bitmapData, x);
 
   @override
-  void onCollide(Player player) {
+  void onCollide(Player player, int playerSize) {
     broken = true;
     player.shrink(0.1);
     setBitmap(bitmapDataBroken);
@@ -68,10 +68,12 @@ class Car extends Item {
   Car(Level level, [num x = null]) : super(level, bitmapData, x);
 
   @override
-  void onCollide(Player player) {
-    broken = true;
-    player.shrink(0.3);
-    setBitmap(bitmapDataBroken);
+  void onCollide(Player player, int playerSize) {
+    if (playerSize >= 1) {
+      broken = true;
+      player.shrink(0.3);
+      setBitmap(bitmapDataBroken);
+    }
   }
 
 }
@@ -84,10 +86,12 @@ class House extends Item {
   House(Level level, [num x = null]) : super(level, bitmapData, x);
 
   @override
-  void onCollide(Player player) {
-    broken = true;
-    player.shrink(0.5);
-    setBitmap(bitmapDataBroken);
+  void onCollide(Player player, int playerSize) {
+    if (playerSize >= 2) {
+      broken = true;
+      player.shrink(0.5);
+      setBitmap(bitmapDataBroken);
+    }
   }
 
 }

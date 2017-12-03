@@ -15,7 +15,7 @@ class Foot extends Sprite {
     graphics.beginPath();
     graphics.rect(50, 0, WIDTH, HEIGHT);
     graphics.circle(WIDTH + 50, HEIGHT / 2, HEIGHT / 2);
-    graphics.fillColor(Color.Brown);
+    graphics.fillColor(Player.SHOES_COLOR);
     y = INACTIVE_Y;
     rotation = INACTIVE_ROTATION;
     pivotX = 50;
