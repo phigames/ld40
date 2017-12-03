@@ -1,0 +1,24 @@
+body {
+    font-family: 'Raleway';
+}
+
+h1 {
+    font-size: 60px;
+}
+
+a {
+    font-weight: bold;
+    text-decoration: none;
+    color: #222222;
+}
+
+.box {
+    margin: 10px auto;
+    width: 800px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#stage {
+    border: solid #222222 2px;
+}
