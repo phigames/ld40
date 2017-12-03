@@ -19,6 +19,7 @@ class Game {
     _stage.onEnterFrame.listen(_update);
     canvas.onClick.listen(_onClick);
     canvas.onKeyDown.listen(_onKeyDown);
+    canvas.onKeyUp.listen(_onKeyUp);
     _currentLevel = new Level();
     _stage.addChild(_currentLevel);
   }
@@ -33,6 +34,10 @@ class Game {
 
   void _onKeyDown(html.KeyboardEvent e) {
     _currentLevel.onCanvasKeyDown(e.keyCode);
+  }
+
+  void _onKeyUp(html.KeyboardEvent e) {
+    _currentLevel.onCanvasKeyUp(e.keyCode);
   }
 
   Stage get stage { return _stage; }

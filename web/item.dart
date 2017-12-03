@@ -2,9 +2,16 @@ part of ld40;
 
 abstract class Item extends Sprite {
 
-  Item(Level level, BitmapData bitmapData) {
+  bool broken;
+
+  Item(Level level, BitmapData bitmapData, [num x = null]) {
+    broken = false;
     setBitmap(bitmapData);
-    x = Game.WIDTH - level.scrollX + 300;
+    if (x == null) {
+      this.x = Game.WIDTH - level.scrollX + 300;
+    } else {
+      this.x = x;
+    }
   }
 
   void setBitmap(BitmapData bitmapData) {
@@ -22,11 +29,14 @@ class MagicPotion extends Item {
   static BitmapData bitmapData = resourceManager.getBitmapData('potion');
   static BitmapData bitmapDataBroken = resourceManager.getBitmapData('potion_broken');
 
-  MagicPotion(Level level) : super(level, bitmapData);
+  num growAmount;
+
+  MagicPotion(Level level, [num x = null, this.growAmount = 0.05]) : super(level, bitmapData, x);
 
   @override
   void onCollide(Player player) {
-    player.grow(0.1);
+    broken = true;
+    player.grow(growAmount);
     setBitmap(bitmapDataBroken);
   }
 
@@ -39,11 +49,12 @@ class Cactus extends Item {
 
   bool broken;
 
-  Cactus(Level level) : super(level, bitmapData);
+  Cactus(Level level, [num x = null]) : super(level, bitmapData, x);
 
   @override
   void onCollide(Player player) {
-    player.shrink(0.2);
+    broken = true;
+    player.shrink(0.1);
     setBitmap(bitmapDataBroken);
   }
 
@@ -54,10 +65,11 @@ class Car extends Item {
   static BitmapData bitmapData = resourceManager.getBitmapData('car');
   static BitmapData bitmapDataBroken = resourceManager.getBitmapData('car_broken');
 
-  Car(Level level) : super(level, bitmapData);
+  Car(Level level, [num x = null]) : super(level, bitmapData, x);
 
   @override
   void onCollide(Player player) {
+    broken = true;
     player.shrink(0.3);
     setBitmap(bitmapDataBroken);
   }
@@ -69,10 +81,11 @@ class House extends Item {
   static BitmapData bitmapData = resourceManager.getBitmapData('house');
   static BitmapData bitmapDataBroken = resourceManager.getBitmapData('house_broken');
 
-  House(Level level) : super(level, bitmapData);
+  House(Level level, [num x = null]) : super(level, bitmapData, x);
 
   @override
   void onCollide(Player player) {
+    broken = true;
     player.shrink(0.5);
     setBitmap(bitmapDataBroken);
   }

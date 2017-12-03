@@ -17,6 +17,7 @@ Game game;
 
 Future<Null> main() async {
   html.CanvasElement canvas = html.querySelector('#stage');
+  canvas.context2D.imageSmoothingEnabled = true;
 
   resourceManager = new ResourceManager();
   addResources();
@@ -36,4 +37,9 @@ void addResources() {
   resourceManager.addBitmapData('car_broken', 'images/car_broken.png');
   resourceManager.addBitmapData('house', 'images/house.png');
   resourceManager.addBitmapData('house_broken', 'images/house_broken.png');
+  resourceManager.addBitmapData('test', 'images/test.png');
+
+  resourceManager.addSound('first', 'sounds/first.ogg');
+  resourceManager.addSound('second', 'sounds/second.ogg');
+  resourceManager.addSound('third', 'sounds/third.ogg');
 }
