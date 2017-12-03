@@ -71,12 +71,12 @@ class Car extends Item {
 
   @override
   void onCollide(Player player, int playerSize) {
-    if (playerSize >= 1) {
+    //if (playerSize >= 1) {
       broken = true;
       player.shrink(0.3);
       setBitmap(bitmapDataBroken);
       level._destroyedCars++;
-    }
+    //}
   }
 
 }
@@ -90,12 +90,12 @@ class House extends Item {
 
   @override
   void onCollide(Player player, int playerSize) {
-    if (playerSize >= 2) {
+    //if (playerSize >= 2) {
       broken = true;
-      player.shrink(0.5);
+      player.shrink(0.8);
       setBitmap(bitmapDataBroken);
       level._destroyedHouses++;
-    }
+    //}
   }
 
 }

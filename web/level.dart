@@ -5,7 +5,7 @@ class Level extends DisplayObjectContainer {
   static final List<int> BACKGROUND_COLORS = [ 0xFFBBDDFF, 0xFFDDBBDD, 0xFFDD9999 ];
   static const int PROGRESS_BAR_COLOR = 0xFF22CC22;
   static const num GROUND_Y = 500;
-  static const num END_DISTANCE = 30000;
+  static const num END_DISTANCE = 40000;
 
   Shape _backgroundColorShape;
   int _oldBackgroundColor;
@@ -158,15 +158,15 @@ class Level extends DisplayObjectContainer {
   }
 
   void _spawnItems(num distanceScrolled) {
-    if (random.nextDouble() < distanceScrolled * 0.003 / (_playerSize + 1)) {
+    if (random.nextDouble() < distanceScrolled * 0.002 * (3 - _playerSize)) {
       _addItem(new MagicPotion(this));
     }
     if (_playerSize >= 2) {
-      if (random.nextDouble() < distanceScrolled * 0.0003) {
+      if (random.nextDouble() < distanceScrolled * 0.008) {
         _addItem(new House(this));
       }
     } else if (_playerSize == 1) {
-      if (random.nextDouble() < distanceScrolled * 0.0005) {
+      if (random.nextDouble() < distanceScrolled * 0.001) {
         _addItem(new Car(this));
       }
     } else if (_playerSize == 0) {
@@ -177,7 +177,7 @@ class Level extends DisplayObjectContainer {
   }
 
   void _updatePlayerSize() {
-    if (_player.scaleY >= 1) {
+    if (_player.scaleY >= 1.2) {
       if (_playerSize != 2) {
         _playerSize = 2;
         _playLoop(_thirdLoop);
@@ -270,11 +270,11 @@ class Level extends DisplayObjectContainer {
     num progress = _player.x / END_DISTANCE;
     graphics.clear();
     graphics.beginPath();
+    graphics.rect(0, 0, Game.WIDTH, 30);
+    graphics.fillColor(0xFF222222);
+    graphics.beginPath();
     graphics.rect(0, 0, progress * Game.WIDTH, 30);
     graphics.fillColor(PROGRESS_BAR_COLOR);
-    graphics.beginPath();
-    graphics.rect(0, 0, Game.WIDTH, 30);
-    graphics.strokeColor(0xFF222222, 2);
     _progressBarHead.x = progress * Game.WIDTH;
   }
 
@@ -311,7 +311,7 @@ class Level extends DisplayObjectContainer {
             ..y = 50
             ..width = Game.WIDTH);
       addChild(
-          new TextField('On your way to work, you destroyed', new TextFormat(Game.FONT, 30, 0xFF222222))
+          new TextField('On your way to work you destroyed', new TextFormat(Game.FONT, 30, 0xFF222222))
             ..x = 150
             ..y = 150
             ..width = Game.WIDTH);

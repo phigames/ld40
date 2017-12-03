@@ -17232,24 +17232,25 @@
         }
         if (t1._levelContainer._x < -800) {
           t3 = $.random.nextDouble$0();
-          t4 = t1._playerSize;
-          if (typeof t4 !== "number")
-            return t4.$add();
-          if (t3 < distance * 0.003 / (t4 + 1)) {
+          t4 = distance * 0.002;
+          t5 = t1._playerSize;
+          if (typeof t5 !== "number")
+            return H.iae(t5);
+          if (t3 < t4 * (3 - t5)) {
             t3 = $.$get$MagicPotion_bitmapData();
-            t4 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
-            t5 = $.DisplayObject__nextID;
-            $.DisplayObject__nextID = t5 + 1;
-            t5 = new K.MagicPotion(0.05, t1, null, null, null, null, t4, true, true, false, true, "auto", true, 0, t5, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-            t5.Item$3(t1, t3, null);
-            t1._items.push(t5);
-            t1._levelContainer.addChild$1(t5);
+            t5 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
+            t6 = $.DisplayObject__nextID;
+            $.DisplayObject__nextID = t6 + 1;
+            t6 = new K.MagicPotion(0.05, t1, null, null, null, null, t5, true, true, false, true, "auto", true, 0, t6, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+            t6.Item$3(t1, t3, null);
+            t1._items.push(t6);
+            t1._levelContainer.addChild$1(t6);
           }
           t3 = t1._playerSize;
           if (typeof t3 !== "number")
             return t3.$ge();
           if (t3 >= 2) {
-            if ($.random.nextDouble$0() < distance * 0.0003) {
+            if ($.random.nextDouble$0() < distance * 0.008) {
               t3 = $.$get$House_bitmapData();
               t4 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
               t5 = $.DisplayObject__nextID;
@@ -17260,7 +17261,7 @@
               t1._levelContainer.addChild$1(t5);
             }
           } else if (t3 === 1) {
-            if ($.random.nextDouble$0() < distance * 0.0005) {
+            if ($.random.nextDouble$0() < distance * 0.001) {
               t3 = $.$get$Car_bitmapData();
               t4 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
               t5 = $.DisplayObject__nextID;
@@ -17271,7 +17272,7 @@
               t1._levelContainer.addChild$1(t5);
             }
           } else if (t3 === 0)
-            if ($.random.nextDouble$0() < distance * 0.002) {
+            if ($.random.nextDouble$0() < t4) {
               t3 = $.$get$Cactus_bitmapData();
               t4 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
               t5 = $.DisplayObject__nextID;
@@ -17325,7 +17326,7 @@
         t1._checkItemsOffScreen$0();
         t1._updateProgressBar$1(t1._progressBar.get$graphics());
         t3 = t1._player._scaleY;
-        if (t3 >= 1) {
+        if (t3 >= 1.2) {
           if (t1._playerSize !== 2) {
             t1._playerSize = 2;
             t1._playLoop$1(t1._thirdLoop);
@@ -17551,7 +17552,7 @@
         t2 = $.DisplayObject__nextID;
         $.DisplayObject__nextID = t2 + 1;
         t4 = new K.Goal(t3, null, null, null, null, t1, true, true, false, true, "auto", true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-        t4.Item$3(t3, t7, 30000);
+        t4.Item$3(t3, t7, 40000);
         t3._items.push(t4);
         t3._levelContainer.addChild$1(t4);
         t3._playerSize = 0;
@@ -17632,36 +17633,28 @@
       "^": "Item;level,broken,_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       onCollide$2: function(player, playerSize) {
         var t1, t2;
-        if (typeof playerSize !== "number")
-          return playerSize.$ge();
-        if (playerSize >= 1) {
-          this.broken = true;
-          player.shrink$1(0.3);
-          this.setBitmap$1($.$get$Car_bitmapDataBroken());
-          t1 = this.level;
-          t2 = t1._destroyedCars;
-          if (typeof t2 !== "number")
-            return t2.$add();
-          t1._destroyedCars = t2 + 1;
-        }
+        this.broken = true;
+        player.shrink$1(0.3);
+        this.setBitmap$1($.$get$Car_bitmapDataBroken());
+        t1 = this.level;
+        t2 = t1._destroyedCars;
+        if (typeof t2 !== "number")
+          return t2.$add();
+        t1._destroyedCars = t2 + 1;
       }
     },
     House: {
       "^": "Item;level,broken,_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       onCollide$2: function(player, playerSize) {
         var t1, t2;
-        if (typeof playerSize !== "number")
-          return playerSize.$ge();
-        if (playerSize >= 2) {
-          this.broken = true;
-          player.shrink$1(0.5);
-          this.setBitmap$1($.$get$House_bitmapDataBroken());
-          t1 = this.level;
-          t2 = t1._destroyedHouses;
-          if (typeof t2 !== "number")
-            return t2.$add();
-          t1._destroyedHouses = t2 + 1;
-        }
+        this.broken = true;
+        player.shrink$1(0.8);
+        this.setBitmap$1($.$get$House_bitmapDataBroken());
+        t1 = this.level;
+        t2 = t1._destroyedHouses;
+        if (typeof t2 !== "number")
+          return t2.$add();
+        t1._destroyedHouses = t2 + 1;
       }
     },
     Goal: {
@@ -17677,7 +17670,7 @@
           t2._width = 800;
           t2._refreshPending |= 3;
           t1.addChild$1(t2);
-          t2 = Y.TextField$("On your way to work, you destroyed", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
+          t2 = Y.TextField$("On your way to work you destroyed", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
           t2.set$x(0, 150);
           t2.set$y(0, 150);
           t2._width = 800;
@@ -17856,26 +17849,22 @@
         t1 = this._player._x;
         graphics.clear$0(0);
         graphics.beginPath$0(0);
-        t1 = t1 / 30000 * 800;
-        command = U.GraphicsCommandRect$(0, 0, t1, 30);
+        command = U.GraphicsCommandRect$(0, 0, 800, 30);
         command._setGraphics$1(graphics);
         t2 = graphics._originalCommands;
         t2.push(command);
         t3 = graphics._compiledCommands;
         C.JSArray_methods.set$length(t3, 0);
         graphics._bounds = null;
-        graphics.fillColor$1(4280470562);
+        graphics.fillColor$1(4280427042);
         graphics.beginPath$0(0);
-        command = U.GraphicsCommandRect$(0, 0, 800, 30);
+        t1 = t1 / 40000 * 800;
+        command = U.GraphicsCommandRect$(0, 0, t1, 30);
         command._setGraphics$1(graphics);
         t2.push(command);
         C.JSArray_methods.set$length(t3, 0);
         graphics._bounds = null;
-        command = new U.GraphicsCommandStrokeColor(4280427042, 2, C.JointStyle_0, C.CapsStyle_0, null);
-        command._setGraphics$1(graphics);
-        t2.push(command);
-        C.JSArray_methods.set$length(t3, 0);
-        graphics._bounds = null;
+        graphics.fillColor$1(4280470562);
         this._progressBarHead.set$x(0, t1);
       },
       _playLoop$1: function(loop) {
