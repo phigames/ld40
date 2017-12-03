@@ -21,7 +21,7 @@ class Player extends Sprite {
     x = 100;
     y = Level.GROUND_Y;
     scaleX = scaleY = _targetScale = MIN_SCALE;
-    //scaleX = scaleY = _targetScale = 1.0;
+    scaleX = scaleY = _targetScale = 1.0 ;
     _blinkTime = 0;
     _leftLeg = new Sprite();
     _body = new Sprite();
@@ -163,10 +163,10 @@ class Player extends Sprite {
 
   void update(num passedTime) {
     if (_activeFoot != null && _inactiveFoot != null) {
-      num maxDiff = 600 / sqrt(scaleX);
+      num maxDiff = 800 / sqrt(scaleX);
       num feetDifference = _activeFoot.x - (_activeFoot == _leftFoot ? _rightFoot.x : _leftFoot.x) - maxDiff;
       if (feetDifference < 0) {
-        num moveSpeed = scaleX * scaleX * 10;
+        num moveSpeed = scaleX * scaleX * 8;
         _moveActiveFoot(moveSpeed * feetDifference * feetDifference * passedTime * 0.0004); // quadratic
         //_moveActiveFoot(moveSpeed * -feetDifference * passedTime); // linear
       }

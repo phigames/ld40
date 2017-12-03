@@ -162,10 +162,11 @@ class Level extends DisplayObjectContainer {
       _addItem(new MagicPotion(this));
     }
     if (_playerSize >= 2) {
-      if (random.nextDouble() < distanceScrolled * 0.008) {
+      if (random.nextDouble() < distanceScrolled * 0.0005) {
         _addItem(new House(this));
       }
-    } else if (_playerSize == 1) {
+    }
+    if (_playerSize >= 1) {
       if (random.nextDouble() < distanceScrolled * 0.001) {
         _addItem(new Car(this));
       }
@@ -177,7 +178,7 @@ class Level extends DisplayObjectContainer {
   }
 
   void _updatePlayerSize() {
-    if (_player.scaleY >= 1.2) {
+    if (_player.scaleY >= 1.0) {
       if (_playerSize != 2) {
         _playerSize = 2;
         _playLoop(_thirdLoop);

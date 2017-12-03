@@ -17249,18 +17249,21 @@
           t3 = t1._playerSize;
           if (typeof t3 !== "number")
             return t3.$ge();
-          if (t3 >= 2) {
-            if ($.random.nextDouble$0() < distance * 0.008) {
+          if (t3 >= 2)
+            if ($.random.nextDouble$0() < distance * 0.0005) {
               t3 = $.$get$House_bitmapData();
-              t4 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
-              t5 = $.DisplayObject__nextID;
-              $.DisplayObject__nextID = t5 + 1;
-              t5 = new K.House(t1, null, null, null, null, t4, true, true, false, true, "auto", true, 0, t5, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-              t5.Item$3(t1, t3, null);
-              t1._items.push(t5);
-              t1._levelContainer.addChild$1(t5);
+              t5 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
+              t6 = $.DisplayObject__nextID;
+              $.DisplayObject__nextID = t6 + 1;
+              t6 = new K.House(t1, null, null, null, null, t5, true, true, false, true, "auto", true, 0, t6, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+              t6.Item$3(t1, t3, null);
+              t1._items.push(t6);
+              t1._levelContainer.addChild$1(t6);
             }
-          } else if (t3 === 1) {
+          t3 = t1._playerSize;
+          if (typeof t3 !== "number")
+            return t3.$ge();
+          if (t3 >= 1) {
             if ($.random.nextDouble$0() < distance * 0.001) {
               t3 = $.$get$Car_bitmapData();
               t4 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
@@ -17271,17 +17274,16 @@
               t1._items.push(t5);
               t1._levelContainer.addChild$1(t5);
             }
-          } else if (t3 === 0)
-            if ($.random.nextDouble$0() < t4) {
-              t3 = $.$get$Cactus_bitmapData();
-              t4 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
-              t5 = $.DisplayObject__nextID;
-              $.DisplayObject__nextID = t5 + 1;
-              t5 = new K.Cactus(null, t1, null, null, null, null, t4, true, true, false, true, "auto", true, 0, t5, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-              t5.Item$3(t1, t3, null);
-              t1._items.push(t5);
-              t1._levelContainer.addChild$1(t5);
-            }
+          } else if ($.random.nextDouble$0() < t4) {
+            t3 = $.$get$Cactus_bitmapData();
+            t4 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
+            t5 = $.DisplayObject__nextID;
+            $.DisplayObject__nextID = t5 + 1;
+            t5 = new K.Cactus(null, t1, null, null, null, null, t4, true, true, false, true, "auto", true, 0, t5, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+            t5.Item$3(t1, t3, null);
+            t1._items.push(t5);
+            t1._levelContainer.addChild$1(t5);
+          }
         }
         t3 = t1._player;
         if (t3._activeFoot != null && t3._inactiveFoot != null) {
@@ -17289,10 +17291,10 @@
           t5 = t3._activeFoot;
           t6 = t5._x;
           t7 = t3._leftFoot;
-          feetDifference = t6 - ((t5 == null ? t7 == null : t5 === t7) ? t3._rightFoot._x : t7._x) - 600 / t4;
+          feetDifference = t6 - ((t5 == null ? t7 == null : t5 === t7) ? t3._rightFoot._x : t7._x) - 800 / t4;
           if (feetDifference < 0) {
             t4 = t3._scaleX;
-            t7 = t4 * t4 * 10 * feetDifference * feetDifference * t2 * 0.0004;
+            t7 = t4 * t4 * 8 * feetDifference * feetDifference * t2 * 0.0004;
             if (t6 < t3._inactiveFoot._x) {
               t3.set$x(0, t3._x + t7);
               t4 = t3._inactiveFoot;
@@ -17326,7 +17328,7 @@
         t1._checkItemsOffScreen$0();
         t1._updateProgressBar$1(t1._progressBar.get$graphics());
         t3 = t1._player._scaleY;
-        if (t3 >= 1.2) {
+        if (t3 >= 1) {
           if (t1._playerSize !== 2) {
             t1._playerSize = 2;
             t1._playLoop$1(t1._thirdLoop);
@@ -17647,14 +17649,18 @@
       "^": "Item;level,broken,_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       onCollide$2: function(player, playerSize) {
         var t1, t2;
-        this.broken = true;
-        player.shrink$1(0.8);
-        this.setBitmap$1($.$get$House_bitmapDataBroken());
-        t1 = this.level;
-        t2 = t1._destroyedHouses;
-        if (typeof t2 !== "number")
-          return t2.$add();
-        t1._destroyedHouses = t2 + 1;
+        if (typeof playerSize !== "number")
+          return playerSize.$ge();
+        if (playerSize >= 2) {
+          this.broken = true;
+          player.shrink$1(0.8);
+          this.setBitmap$1($.$get$House_bitmapDataBroken());
+          t1 = this.level;
+          t2 = t1._destroyedHouses;
+          if (typeof t2 !== "number")
+            return t2.$add();
+          t1._destroyedHouses = t2 + 1;
+        }
       }
     },
     Goal: {
@@ -18146,6 +18152,9 @@
         this._targetScale = 0.1;
         this.set$scaleY(0.1);
         this.set$scaleX(0.1);
+        this._targetScale = 1;
+        this.set$scaleY(1);
+        this.set$scaleX(1);
         this._blinkTime = 0;
         t1 = [A.DisplayObject];
         t2 = H.setRuntimeTypeInfo([], t1);
