@@ -63,7 +63,6 @@ class Level extends DisplayObjectContainer {
 
     _destroyedCacti = _destroyedCars = _destroyedHouses = 0;
     _playingTime = -120;
-    //_playingTime = -4;
     _playing = false;
 
     _shakeTime = 0;
@@ -76,8 +75,8 @@ class Level extends DisplayObjectContainer {
     _updateProgressBar(_progressBar.graphics);
 
     _timer = new TextField('', new TextFormat(Game.FONT, 30, 0xFF222222)..bold = true)
-      ..x = Game.WIDTH - 220
-      ..y = 60
+      ..x = Game.WIDTH - 195
+      ..y = 55
       ..width = Game.WIDTH;
     addChild(_timer);
 
@@ -85,7 +84,7 @@ class Level extends DisplayObjectContainer {
     _addItem(new MagicPotion(this, Game.WIDTH + 100, 0.1));
     _addItem(new Cactus(this, Game.WIDTH + 600));
     _background.addChild(
-        new TextField('Hurry up, school starts at 8! ▶', new TextFormat(Game.FONT, 40, 0xFF222222))
+        new TextField('Hurry up, school starts at 8! ▶', new TextFormat(Game.FONT, 42, 0xFF222222))
           ..x = 30
           ..y = 50
           ..width = Game.WIDTH);
@@ -449,7 +448,7 @@ class Level extends DisplayObjectContainer {
     num hours = time ~/ 3600;
     num minutes = time % 3600 ~/ 60;
     num seconds = time.floor() % 60;
-    _timer.text = '${hours < 10 ? '0' : ''}$hours:${minutes < 10 ? '0' : ''}$minutes:${seconds < 10 ? '0' : ''}$seconds a.m.';
+    _timer.text = '$hours:${minutes < 10 ? '0' : ''}$minutes:${seconds < 10 ? '0' : ''}$seconds a.m.';
     _scroll(passedTime);
     if (_playerStepped) {
       _step();

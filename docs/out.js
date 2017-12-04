@@ -17317,8 +17317,8 @@
         t6 = new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0);
         t6.bold = true;
         t6 = Y.TextField$("", t6);
-        t6.set$x(0, 650);
-        t6.set$y(0, 60);
+        t6.set$x(0, 605);
+        t6.set$y(0, 55);
         t6._text$_width = 800;
         t6._refreshPending |= 3;
         t3._timer = t6;
@@ -17341,7 +17341,7 @@
         t3._items.push(t2);
         t3._levelContainer.addChild$1(t2);
         t2 = t3._background;
-        t7 = Y.TextField$("Hurry up, school starts at 8! \u25b6", new Y.TextFormat("Raleway", 45, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
+        t7 = Y.TextField$("Hurry up, school starts at 8! \u25b6", new Y.TextFormat("Raleway", 42, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
         t7.set$x(0, 30);
         t7.set$y(0, 50);
         t7._text$_width = 800;
@@ -17407,7 +17407,7 @@
             t1._targetBackgroundColor = $.$get$Level_BACKGROUND_COLORS()[1];
             t1._backgroundColorTime = 1;
             t3 = t1._timer;
-            t3._defaultTextFormat.color = 4292682274;
+            t3._defaultTextFormat.color = 4287102976;
             t3._refreshPending |= 2;
             t1._playLoop$1(t1._loopHurry);
           }
@@ -17420,10 +17420,9 @@
         minutes = C.JSNumber_methods._tdivFast$1(C.JSNumber_methods.$mod(time, 3600), 60);
         seconds = C.JSInt_methods.$mod(C.JSNumber_methods.floor$0(time), 60);
         t3 = t1._timer;
-        t4 = hours < 10 ? "0" : "";
-        t4 = t4 + H.S(hours) + ":";
+        t4 = H.S(hours) + ":";
         t4 = t4 + (minutes < 10 ? "0" : "") + H.S(minutes) + ":";
-        t3.set$text(0, t4 + (seconds < 10 ? "0" : "") + seconds);
+        t3.set$text(0, t4 + (seconds < 10 ? "0" : "") + seconds + " a.m.");
         distance = Math.sqrt(Math.max(t1._player._x - 100 + t1._levelContainer._x, 0)) * 40 * t2;
         t3 = t1._player.get$activeFootPosition();
         t4 = t1._levelContainer;
@@ -17715,7 +17714,7 @@
     Goal: {
       "^": "Item;level,broken,_tolerance,_display$_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       onCollide$2: function(player, playerSize) {
-        var t1, t2;
+        var t1, t2, t3;
         t1 = this.level;
         if (t1._won !== true) {
           t1._won = true;
@@ -17762,25 +17761,35 @@
           if (typeof t2 !== "number")
             return t2.$lt();
           if (t2 < 0) {
-            t2 = Y.TextField$("He is " + H.S(C.JSNumber_methods._tdivFast$1(-t2, 60)) + " min " + C.JSInt_methods.$mod(-J.round$0$n(t1._playingTime), 60) + " s early.", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
-            t2.set$x(0, 150);
-            t2.set$y(0, 300);
-            t2._text$_width = 800;
-            t2._refreshPending |= 3;
-            t1.addChild$1(t2);
-            t2 = Y.TextField$("Maybe he could've finished watching that episode of Monty Python after all...", new Y.TextFormat("Raleway", 15, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
-            t2.set$x(0, 150);
-            t2.set$y(0, 330);
-            t2._text$_width = 800;
-            t2._refreshPending |= 3;
-            t1.addChild$1(t2);
+            t2 = "He is " + H.S(C.JSNumber_methods._tdivFast$1(-t2, 60)) + " min " + C.JSInt_methods.$mod(-J.round$0$n(t1._playingTime), 60) + " s early.";
+            t3 = new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0);
+            t3.bold = true;
+            t3 = Y.TextField$(t2, t3);
+            t3.set$x(0, 150);
+            t3.set$y(0, 300);
+            t3._text$_width = 800;
+            t2 = t3._refreshPending |= 3;
+            t3._defaultTextFormat.color = 4278224896;
+            t3._refreshPending = t2 | 2;
+            t1.addChild$1(t3);
+            t3 = Y.TextField$("Maybe he could've finished watching that episode of Monty Python after all...", new Y.TextFormat("Raleway", 15, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
+            t3.set$x(0, 150);
+            t3.set$y(0, 330);
+            t3._text$_width = 800;
+            t3._refreshPending |= 3;
+            t1.addChild$1(t3);
           } else {
-            t2 = Y.TextField$("He is " + H.S(C.JSNumber_methods._tdivFast$1(t2, 60)) + " min " + C.JSInt_methods.$mod(J.round$0$n(t1._playingTime), 60) + " s late.", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
-            t2.set$x(0, 150);
-            t2.set$y(0, 300);
-            t2._text$_width = 800;
-            t2._refreshPending |= 3;
-            t1.addChild$1(t2);
+            t2 = "He is " + H.S(C.JSNumber_methods._tdivFast$1(t2, 60)) + " min " + C.JSInt_methods.$mod(J.round$0$n(t1._playingTime), 60) + " s late.";
+            t3 = new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0);
+            t3.bold = true;
+            t3 = Y.TextField$(t2, t3);
+            t3.set$x(0, 150);
+            t3.set$y(0, 300);
+            t3._text$_width = 800;
+            t2 = t3._refreshPending |= 3;
+            t3._defaultTextFormat.color = 4287102976;
+            t3._refreshPending = t2 | 2;
+            t1.addChild$1(t3);
           }
           t2 = Y.TextField$("[R] to play again.", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
           t2.set$x(0, 150);
