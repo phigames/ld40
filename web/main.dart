@@ -17,7 +17,7 @@ Random random;
 Game game;
 
 Future<Null> main() async {
-  print('\'tis the season!');
+  print('release candidate 1');
   canvas = html.querySelector('#stage');
   canvas.context2D.imageSmoothingEnabled = true;
 

@@ -17137,7 +17137,7 @@
           switch ($async$goto) {
             case 0:
               // Function start
-              P.print("'tis the season!");
+              P.print("release candidate 1");
               t1 = document;
               t2 = t1.querySelector("#stage");
               $.canvas = t2;
@@ -17169,15 +17169,6 @@
               t2 = $.resourceManager;
               t2.toString;
               t2._addResource$4("BitmapData", "goal", "images/goal.png", A.BitmapData_load("images/goal.png", null));
-              t2 = $.resourceManager;
-              t2.toString;
-              t2._addResource$4("Sound", "first", "sounds/first.ogg", E.Sound_load("sounds/first.ogg", null));
-              t2 = $.resourceManager;
-              t2.toString;
-              t2._addResource$4("Sound", "second", "sounds/second.ogg", E.Sound_load("sounds/second.ogg", null));
-              t2 = $.resourceManager;
-              t2.toString;
-              t2._addResource$4("Sound", "third", "sounds/third.ogg", E.Sound_load("sounds/third.ogg", null));
               t2 = $.resourceManager;
               t2.toString;
               t2._addResource$4("Sound", "loop", "sounds/loop.ogg", E.Sound_load("sounds/loop.ogg", null));
@@ -17260,7 +17251,7 @@
         t3 = $.DisplayObject__nextID;
         $.DisplayObject__nextID = t3 + 1;
         t4 = [A.BitmapFilter];
-        t3 = new K.Level(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+        t3 = new K.Level(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
         t2 = [U.GraphicsCommand];
         t5 = H.setRuntimeTypeInfo([], t2);
         t6 = H.setRuntimeTypeInfo([], t2);
@@ -17394,9 +17385,6 @@
         t3._playerSize = 0;
         t3._won = false;
         t3._spaceDown = false;
-        t3._firstLoop = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "first"), "$isSound");
-        t3._secondLoop = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "second"), "$isSound");
-        t3._thirdLoop = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "third"), "$isSound");
         t3._loop = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "loop"), "$isSound");
         t3._loopHurry = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "loop_hurry"), "$isSound");
         t3._stampfSound = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "stampf"), "$isSound");
@@ -17815,7 +17803,7 @@
       }
     },
     Level: {
-      "^": "DisplayObjectContainer;_backgroundColorShape,_oldBackgroundColor,_targetBackgroundColor,_backgroundColorTime,_floor,_background,_parallaxDistance,_levelContainer,_player,_playerStepped,_items,_lastItemPosition,_destroyedCacti,_destroyedCars,_destroyedHouses,_playingTime,_playing,_shakeTime,_progressBar,_progressBarHead,_timer,_playerSize,_won,_spaceDown,_firstLoop,_secondLoop,_thirdLoop,_loop,_loopHurry,_activeLoopChannel,_stampfSound,_endSound,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
+      "^": "DisplayObjectContainer;_backgroundColorShape,_oldBackgroundColor,_targetBackgroundColor,_backgroundColorTime,_floor,_background,_parallaxDistance,_levelContainer,_player,_playerStepped,_items,_lastItemPosition,_destroyedCacti,_destroyedCars,_destroyedHouses,_playingTime,_playing,_shakeTime,_progressBar,_progressBarHead,_timer,_playerSize,_won,_spaceDown,_loop,_loopHurry,_activeLoopChannel,_stampfSound,_endSound,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       _checkItemCollisions$0: function() {
         var i, t1, item, t2, t3, t4, t5, footX, rectangle;
         for (i = 0; t1 = this._items, i < t1.length; ++i) {
