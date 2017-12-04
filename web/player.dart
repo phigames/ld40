@@ -3,7 +3,7 @@ part of ld40;
 class Player extends Sprite {
 
   static const num MIN_SCALE = 0.1;
-  static const int SKIN_COLOR = 0xFFFFE4C4;
+  static const int SKIN_COLOR = 0xFFFFCFB2;
   static const int FACE_COLOR = 0xFF555555;
   static const int SHIRT_COLOR = 0xFFFF5520;
   static const int SHIRT_COLOR_DARK = 0xFFE04510;
@@ -16,7 +16,7 @@ class Player extends Sprite {
   Sprite _body;
   Foot _leftFoot, _rightFoot;
   Foot _activeFoot, _inactiveFoot;
-  Sound _growSound, _outchSound;
+  Sound _growSound, _ouchSound;
 
   Player() {
     x = 100;
@@ -36,7 +36,7 @@ class Player extends Sprite {
     addChild(_body);
     addChild(_rightFoot);
     _growSound = resourceManager.getSound('grow');
-    _outchSound = resourceManager.getSound('outch');
+    _ouchSound = resourceManager.getSound('ouch');
   }
 
   void step() {
@@ -59,7 +59,7 @@ class Player extends Sprite {
   bool steppedOn(Item item) {
     num footX = _inactiveFoot.hitboxX * scaleX + x;
     num footWidth = _inactiveFoot.hitboxWidth * scaleX;
-    return footX < item.x + item.width && footX + footWidth > item.x;
+    return footX < item.x + item.width - item.tolerance && footX + footWidth > item.x + item.tolerance;
   }
 
   void grow(num amount) {
@@ -76,7 +76,7 @@ class Player extends Sprite {
       ..animate.scaleX.to(_targetScale)
       ..animate.scaleY.to(_targetScale);
     _blinkTime = 0.8;
-    _outchSound.play();
+    _ouchSound.play();
   }
 
   num get activeFootPosition {
@@ -91,7 +91,8 @@ class Player extends Sprite {
     if (_activeFoot.x < _inactiveFoot.x) {
       x += distance;
       _inactiveFoot.x -= distance / scaleX; // always move independent of player scale
-      if (_inactiveFoot.x < 0) {
+      if (_inactiveFoot.x < 0) { // body moved too far
+        x += _inactiveFoot.x * scaleX;
         _inactiveFoot.x = 0;
       }
     } else {

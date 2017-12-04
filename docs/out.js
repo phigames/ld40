@@ -11866,19 +11866,19 @@
       }
     },
     Sprite: {
-      "^": "DisplayObjectContainer;_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
+      "^": "DisplayObjectContainer;_display$_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       get$graphics: function() {
-        var t1 = this._graphics;
+        var t1 = this._display$_graphics;
         if (!(t1 != null)) {
           t1 = [U.GraphicsCommand];
           t1 = new U.Graphics(H.setRuntimeTypeInfo([], t1), H.setRuntimeTypeInfo([], t1), null);
-          this._graphics = t1;
+          this._display$_graphics = t1;
         }
         return t1;
       },
       get$bounds: function() {
         var t1, t2, t3, rLeft, rTop;
-        t1 = this._graphics;
+        t1 = this._display$_graphics;
         if (t1 == null)
           return A.DisplayObjectContainer.prototype.get$bounds.call(this);
         else if (this._children.length === 0)
@@ -11894,14 +11894,14 @@
       },
       hitTestInput$2: function(localX, localY) {
         var graphics, target;
-        graphics = this._graphics;
+        graphics = this._display$_graphics;
         target = this.super$DisplayObjectContainer$hitTestInput(localX, localY);
         if (target == null && graphics != null)
           target = graphics.hitTest$2(localX, localY) ? this : null;
         return target;
       },
       render$1: function(renderState) {
-        var t1 = this._graphics;
+        var t1 = this._display$_graphics;
         if (t1 != null)
           t1.render$1(renderState);
         this.super$DisplayObjectContainer$render(renderState);
@@ -12653,13 +12653,13 @@
   }], ["stagexl.drawing", "package:stagexl/src/drawing.dart",, U, {
     "^": "",
     GraphicsCommandBeginPath: {
-      "^": "GraphicsCommand;_drawing$_graphics",
+      "^": "GraphicsCommand;_graphics",
       updateContext$1: function(context) {
         context.beginPath$0(0);
       }
     },
     GraphicsCommandCircle: {
-      "^": "GraphicsCommand;_drawing$_x,_drawing$_y,_radius,_antiClockwise,_drawing$_graphics",
+      "^": "GraphicsCommand;_drawing$_x,_drawing$_y,_radius,_antiClockwise,_graphics",
       get$x: function(_) {
         return this._drawing$_x;
       },
@@ -12682,13 +12682,13 @@
       "^": "GraphicsCommand;"
     },
     GraphicsCommandFillColor: {
-      "^": "GraphicsCommandFill;_color,_drawing$_graphics",
+      "^": "GraphicsCommandFill;_color,_graphics",
       updateContext$1: function(context) {
         context.fillColor$1(this._color);
       }
     },
     GraphicsCommandLineTo: {
-      "^": "GraphicsCommand;_drawing$_x,_drawing$_y,_drawing$_graphics",
+      "^": "GraphicsCommand;_drawing$_x,_drawing$_y,_graphics",
       get$x: function(_) {
         return this._drawing$_x;
       },
@@ -12700,7 +12700,7 @@
       }
     },
     GraphicsCommandMoveTo: {
-      "^": "GraphicsCommand;_drawing$_x,_drawing$_y,_drawing$_graphics",
+      "^": "GraphicsCommand;_drawing$_x,_drawing$_y,_graphics",
       get$x: function(_) {
         return this._drawing$_x;
       },
@@ -12712,7 +12712,7 @@
       }
     },
     GraphicsCommandRect: {
-      "^": "GraphicsCommand;_drawing$_x,_drawing$_y,_width,_height,_drawing$_graphics",
+      "^": "GraphicsCommand;_drawing$_x,_drawing$_y,_width,_height,_graphics",
       get$x: function(_) {
         return this._drawing$_x;
       },
@@ -12745,7 +12745,7 @@
       }
     },
     GraphicsCommandStrokeColor: {
-      "^": "GraphicsCommandStroke;_color,_width,_jointStyle,_capsStyle,_drawing$_graphics",
+      "^": "GraphicsCommandStroke;_color,_width,_jointStyle,_capsStyle,_graphics",
       updateContext$1: function(context) {
         context.strokeColor$4(this._color, this._width, this._jointStyle, this._capsStyle);
       }
@@ -12842,10 +12842,10 @@
     GraphicsCommand: {
       "^": "Object;",
       _setGraphics$1: function(graphics) {
-        if (this._drawing$_graphics != null && graphics != null)
+        if (this._graphics != null && graphics != null)
           throw H.wrapException(P.ArgumentError$("Command is already assigned to graphics."));
         else
-          this._drawing$_graphics = graphics;
+          this._graphics = graphics;
       }
     },
     GraphicsContext: {
@@ -12864,7 +12864,7 @@
       }
     },
     _GraphicsCommandMeshColor: {
-      "^": "GraphicsCommand;mesh,color,_drawing$_graphics",
+      "^": "GraphicsCommand;mesh,color,_graphics",
       updateContext$1: function(context) {
         if (!!context.$is_GraphicsContextBase)
           context.meshColor$1(this);
@@ -15823,11 +15823,11 @@
         this._requestAudioElement$1(t1).then$1(t1.get$_onAudioElement());
         return t1;
       },
-      play$1: function($receiver, loop) {
-        return this.play$2($receiver, loop, null);
-      },
       play$0: function($receiver) {
         return this.play$2($receiver, false, null);
+      },
+      play$1: function($receiver, loop) {
+        return this.play$2($receiver, loop, null);
       },
       _requestAudioElement$1: function(soundChannel) {
         var $async$goto = 0, $async$completer = P.Completer_Completer$sync(), $async$returnValue, $async$self = this, t1, t2, audioElement, t3, audioCanPlay;
@@ -15986,6 +15986,24 @@
           return C.JSNumber_methods.clamp$2(currentTime - t1, 0, this._media$_duration);
         }
       },
+      set$position: function(_, value) {
+        var t1, t2, position;
+        t1 = this._media$_loop;
+        t2 = this._media$_duration;
+        position = t1 ? C.JSInt_methods.$mod(value, t2) : C.JSInt_methods.clamp$2(value, 0, t2);
+        if (!this._stopped)
+          if (this._paused || this._audioElement == null)
+            this._media$_position = position;
+          else {
+            t1 = this._completeTimer;
+            if (!(t1 == null))
+              t1.cancel$0(0);
+            this._completeTimer = null;
+            this._media$_position = position;
+            J.set$currentTime$x(this._audioElement, this._startTime + position);
+            this._startCompleteTimer$1(this._media$_duration - this._media$_position);
+          }
+      },
       set$paused: function(_, value) {
         var t1;
         if (!(this._paused === value)) {
@@ -16086,15 +16104,18 @@
         t1._media$_loop = loop;
         return t1;
       },
-      play$1: function($receiver, loop) {
-        return this.play$2($receiver, loop, null);
-      },
       play$0: function($receiver) {
         return this.play$2($receiver, false, null);
+      },
+      play$1: function($receiver, loop) {
+        return this.play$2($receiver, loop, null);
       }
     },
     MockSoundChannel: {
       "^": "SoundChannel;_mockSound,_stopped,_paused,_media$_loop,_startTime,_media$_duration,_media$_position,_soundTransform,_eventStreams",
+      set$position: function(_, value) {
+        return;
+      },
       set$paused: function(_, value) {
         this._paused = this._stopped || value;
       },
@@ -16143,11 +16164,11 @@
         t2.set$paused(0, false);
         return t2;
       },
-      play$1: function($receiver, loop) {
-        return this.play$2($receiver, loop, null);
-      },
       play$0: function($receiver) {
         return this.play$2($receiver, false, null);
+      },
+      play$1: function($receiver, loop) {
+        return this.play$2($receiver, loop, null);
       },
       static: {
         WebAudioApiSound_load: function(url, soundLoadOptions) {
@@ -16255,6 +16276,20 @@
           t2 = this._media$_duration;
           return t1 ? C.JSDouble_methods.$mod(position, t2) : C.JSDouble_methods.clamp$2(position, 0, t2);
         }
+      },
+      set$position: function(_, value) {
+        var t1, t2, position;
+        t1 = this._media$_loop;
+        t2 = this._media$_duration;
+        position = t1 ? C.JSInt_methods.$mod(value, t2) : C.JSInt_methods.clamp$2(value, 0, t2);
+        if (!this._stopped)
+          if (this._paused)
+            this._media$_position = position;
+          else {
+            this.set$paused(0, true);
+            this._media$_position = position;
+            this.set$paused(0, false);
+          }
       },
       set$paused: function(_, value) {
         var t1, t2, t3, t4;
@@ -16857,10 +16892,9 @@
         this._renderTexture.update$0(0);
       },
       _renderText$1: function(context) {
-        var textFormat, t1, lineWidth, i, lm;
+        var textFormat, lineWidth, t1, i, lm;
         textFormat = this._defaultTextFormat;
-        t1 = textFormat.size;
-        lineWidth = C.JSDouble_methods.ceil$0(t1 / 20);
+        lineWidth = C.JSDouble_methods.ceil$0(textFormat.bold ? textFormat.size / 10 : textFormat.size / 20);
         context.save();
         context.beginPath();
         context.rect(0, 0, this._text$_width, this._text$_height);
@@ -16880,9 +16914,8 @@
           }
         }
         context.lineWidth = lineWidth;
-        t1 = textFormat.color;
-        context.strokeStyle = V.color2rgb(t1);
-        t1 = V.color2rgb(t1);
+        context.strokeStyle = V.color2rgb(textFormat.color);
+        t1 = V.color2rgb(textFormat.color);
         context.fillStyle = t1;
         for (t1 = this._textLineMetrics, i = 0; i < t1.length; ++i) {
           lm = t1[i];
@@ -17038,7 +17071,7 @@
       }, "call$1", "get$_onMouseDown", 2, 0, 28],
       TextField$2: function(text, textFormat) {
         this.set$text(0, text);
-        this._defaultTextFormat = new Y.TextFormat(textFormat.font, textFormat.size, textFormat.color, textFormat.strokeWidth, textFormat.strokeColor, textFormat.fillGradient, textFormat.weight, false, false, false, textFormat.align, textFormat.verticalAlign, textFormat.topMargin, textFormat.bottomMargin, textFormat.leftMargin, textFormat.rightMargin, textFormat.indent, textFormat.leading);
+        this._defaultTextFormat = new Y.TextFormat(textFormat.font, textFormat.size, textFormat.color, textFormat.strokeWidth, textFormat.strokeColor, textFormat.fillGradient, textFormat.weight, textFormat.bold, false, false, textFormat.align, textFormat.verticalAlign, textFormat.topMargin, textFormat.bottomMargin, textFormat.leftMargin, textFormat.rightMargin, textFormat.indent, textFormat.leading);
         this._refreshPending |= 3;
         this.on$1(0, "keyDown").listen$1(this.get$_text$_onKeyDown());
         this.on$1(0, "textInput").listen$1(this.get$_onTextInput());
@@ -17059,7 +17092,11 @@
     TextFormat: {
       "^": "Object;font,size,color,strokeWidth,strokeColor,fillGradient,weight,bold,italic,underline,align,verticalAlign,topMargin,bottomMargin,leftMargin,rightMargin,indent,leading",
       get$_cssFontStyle: function() {
-        var fontStyle = "" + this.weight + " " + this.size + "px " + this.font;
+        var t1, fontStyle;
+        t1 = this.size;
+        fontStyle = "" + this.weight + " " + t1 + "px " + this.font;
+        if (this.bold)
+          fontStyle = "bold " + t1 + "px " + this.font;
         return fontStyle;
       }
     },
@@ -17100,7 +17137,7 @@
           switch ($async$goto) {
             case 0:
               // Function start
-              P.print("bananas!");
+              P.print("'tis the season!");
               t1 = document;
               t2 = t1.querySelector("#stage");
               $.canvas = t2;
@@ -17146,10 +17183,16 @@
               t2._addResource$4("Sound", "loop", "sounds/loop.ogg", E.Sound_load("sounds/loop.ogg", null));
               t2 = $.resourceManager;
               t2.toString;
+              t2._addResource$4("Sound", "loop_hurry", "sounds/loop_hurry.ogg", E.Sound_load("sounds/loop_hurry.ogg", null));
+              t2 = $.resourceManager;
+              t2.toString;
               t2._addResource$4("Sound", "grow", "sounds/grow.ogg", E.Sound_load("sounds/grow.ogg", null));
               t2 = $.resourceManager;
               t2.toString;
-              t2._addResource$4("Sound", "outch", "sounds/outch.ogg", E.Sound_load("sounds/outch.ogg", null));
+              t2._addResource$4("Sound", "ouch", "sounds/ouch.ogg", E.Sound_load("sounds/ouch.ogg", null));
+              t2 = $.resourceManager;
+              t2.toString;
+              t2._addResource$4("Sound", "stampf", "sounds/stampf.ogg", E.Sound_load("sounds/stampf.ogg", null));
               t2 = $.resourceManager;
               t2.toString;
               t2._addResource$4("Sound", "end", "sounds/end.ogg", E.Sound_load("sounds/end.ogg", null));
@@ -17169,7 +17212,7 @@
       return P._asyncStart($async$main, $async$completer);
     }, "call$0", "main__main$closure", 0, 0, 23],
     Foot: {
-      "^": "Sprite;_hitboxX,_hitboxWidth,_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
+      "^": "Sprite;_hitboxX,_hitboxWidth,_display$_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       Foot$0: function() {
         var t1, command;
         this.get$graphics().beginPath$0(0);
@@ -17217,7 +17260,7 @@
         t3 = $.DisplayObject__nextID;
         $.DisplayObject__nextID = t3 + 1;
         t4 = [A.BitmapFilter];
-        t3 = new K.Level(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+        t3 = new K.Level(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
         t2 = [U.GraphicsCommand];
         t5 = H.setRuntimeTypeInfo([], t2);
         t6 = H.setRuntimeTypeInfo([], t2);
@@ -17255,12 +17298,14 @@
         t6 = K.Player$();
         t3._player = t6;
         t3._levelContainer.addChild$1(t6);
+        t3._playerStepped = false;
         t3._items = H.setRuntimeTypeInfo([], [K.Item]);
         t3._lastItemPosition = 0;
         t3._destroyedHouses = 0;
         t3._destroyedCars = 0;
         t3._destroyedCacti = 0;
         t3._playingTime = -120;
+        t3._playing = false;
         t3._shakeTime = 0;
         t6 = H.setRuntimeTypeInfo([], t1);
         t7 = $.DisplayObject__nextID;
@@ -17277,7 +17322,9 @@
         t3._progressBar.addChild$1(t6);
         t3._drawProgressBarHead$1(t3._progressBarHead.graphics);
         t3._updateProgressBar$1(t3._progressBar.get$graphics());
-        t6 = Y.TextField$("", new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0));
+        t6 = new Y.TextFormat("Raleway", 30, 4280427042, 0, 4278190080, null, 400, false, false, false, "left", "top", 0, 0, 0, 0, 0, 0);
+        t6.bold = true;
+        t6 = Y.TextField$("", t6);
         t6.set$x(0, 650);
         t6.set$y(0, 60);
         t6._text$_width = 800;
@@ -17288,15 +17335,16 @@
         t2 = H.setRuntimeTypeInfo([], t1);
         t7 = $.DisplayObject__nextID;
         $.DisplayObject__nextID = t7 + 1;
-        t7 = new K.MagicPotion(0.1, t3, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t7, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+        t7 = new K.MagicPotion(0.1, t3, null, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t7, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
         t7.Item$3(t3, t6, 900);
+        t7._tolerance = t7.get$boundsTransformed().width * 0;
         t3._items.push(t7);
         t3._levelContainer.addChild$1(t7);
         t7 = $.$get$Cactus_bitmapData();
         t6 = H.setRuntimeTypeInfo([], t1);
         t2 = $.DisplayObject__nextID;
         $.DisplayObject__nextID = t2 + 1;
-        t2 = new K.Cactus(null, t3, null, null, null, null, t6, true, true, false, true, "auto", true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+        t2 = new K.Cactus(null, t3, null, null, null, null, null, t6, true, true, false, true, "auto", true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
         t2.Item$3(t3, t7, 1400);
         t3._items.push(t2);
         t3._levelContainer.addChild$1(t2);
@@ -17339,8 +17387,8 @@
         t1 = H.setRuntimeTypeInfo([], t1);
         t2 = $.DisplayObject__nextID;
         $.DisplayObject__nextID = t2 + 1;
-        t4 = new K.Goal(t3, null, null, null, null, t1, true, true, false, true, "auto", true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
-        t4.Item$3(t3, t7, 40000);
+        t4 = new K.Goal(t3, null, null, null, null, null, t1, true, true, false, true, "auto", true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], t4), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+        t4.Item$3(t3, t7, 45000);
         t3._items.push(t4);
         t3._levelContainer.addChild$1(t4);
         t3._playerSize = 0;
@@ -17350,23 +17398,34 @@
         t3._secondLoop = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "second"), "$isSound");
         t3._thirdLoop = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "third"), "$isSound");
         t3._loop = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "loop"), "$isSound");
+        t3._loopHurry = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "loop_hurry"), "$isSound");
+        t3._stampfSound = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "stampf"), "$isSound");
         t3._endSound = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "end"), "$isSound");
         this._currentLevel = t3;
         this._stage.addChild$1(t3);
       },
       _update$1: [function(_, e) {
-        var t1, t2, t3, time, hours, minutes, seconds, t4, distance, t5, t6, t7, feetDifference;
+        var t1, t2, t3, time, hours, minutes, seconds, t4, distance, t5, temp, t6, t7, feetDifference;
         t1 = this._currentLevel;
         t2 = e.get$passedTime();
+        if (t1._playing === true) {
+          t3 = t1._playingTime;
+          if (typeof t3 !== "number")
+            return t3.$add();
+          t3 += t2;
+          t1._playingTime = t3;
+          if (t3 - t2 < 0 && t3 >= 0) {
+            t1._targetBackgroundColor = $.$get$Level_BACKGROUND_COLORS()[1];
+            t1._backgroundColorTime = 1;
+            t3 = t1._timer;
+            t3._defaultTextFormat.color = 4292682274;
+            t3._refreshPending |= 2;
+            t1._playLoop$1(t1._loopHurry);
+          }
+        }
         t3 = t1._playingTime;
         if (typeof t3 !== "number")
-          return t3.$add();
-        t3 += t2;
-        t1._playingTime = t3;
-        if (t3 - t2 < 0 && t3 >= 0) {
-          t1._targetBackgroundColor = $.$get$Level_BACKGROUND_COLORS()[1];
-          t1._backgroundColorTime = 1;
-        }
+          return H.iae(t3);
         time = 28800 + t3;
         hours = C.JSNumber_methods._tdivFast$1(time, 3600);
         minutes = C.JSNumber_methods._tdivFast$1(C.JSNumber_methods.$mod(time, 3600), 60);
@@ -17401,6 +17460,41 @@
         }
         if (t1._levelContainer._x < -800)
           t1._spawnItems$1(distance);
+        if (t1._playerStepped === true) {
+          if (t1._playing !== true && t1._won !== true) {
+            t1._playing = true;
+            t1._playLoop$1(t1._loop);
+          }
+          t3 = t1._player;
+          t4 = t3._activeFoot;
+          if (t4 == null || t3._inactiveFoot == null) {
+            t4 = t3._leftFoot;
+            t3._activeFoot = t4;
+            t3._inactiveFoot = t3._rightFoot;
+          }
+          t4 = $.game._stage.juggler.addTween$2(t4, 0.1);
+          t5 = t4.get$animate(t4);
+          t5._tween._createTweenProperty$2(t5, 1)._targetValue = -50;
+          t4 = t4.get$animate(t4);
+          t4._tween._createTweenProperty$2(t4, 8)._targetValue = 0;
+          t4 = $.game._stage.juggler.addTween$3(t3._inactiveFoot, 0.2, K.animation_Transition_easeOutCubic$closure());
+          t5 = t4.get$animate(t4);
+          t5._tween._createTweenProperty$2(t5, 1)._targetValue = -500;
+          t4 = t4.get$animate(t4);
+          t4._tween._createTweenProperty$2(t4, 8)._targetValue = -1.5707963267948966;
+          temp = t3._activeFoot;
+          t3._activeFoot = t3._inactiveFoot;
+          t3._inactiveFoot = temp;
+          t1._checkItemCollisions$0();
+          t3 = t1._playerSize;
+          if (typeof t3 !== "number")
+            return t3.$ge();
+          if (t3 >= 2) {
+            t1._shakeTime = 0.5;
+            t1._stampfSound.play$0(0);
+          }
+          t1._playerStepped = false;
+        }
         t3 = t1._player;
         if (t3._activeFoot != null && t3._inactiveFoot != null) {
           t4 = Math.sqrt(t3._scaleX);
@@ -17415,9 +17509,11 @@
               t3.set$x(0, t3._x + t7);
               t4 = t3._inactiveFoot;
               t4.set$x(0, t4._x - t7 / t3._scaleX);
-              t4 = t3._inactiveFoot;
-              if (t4._x < 0)
-                t4.set$x(0, 0);
+              t4 = t3._inactiveFoot._x;
+              if (t4 < 0) {
+                t3.set$x(0, t3._x + t4 * t3._scaleX);
+                t3._inactiveFoot.set$x(0, 0);
+              }
             } else
               t5.set$x(0, t6 + t7 / t4);
           }
@@ -17476,7 +17572,7 @@
         t2 = J.get$button$x(e);
         t1.toString;
         if (t2 === 0)
-          t1._step$0();
+          t1._playerStepped = true;
       }, "call$1", "get$_onClick", 2, 0, 12],
       _onKeyDown$1: [function(e) {
         var t1, t2;
@@ -17485,7 +17581,7 @@
         t1.toString;
         if (t2 === 32 && t1._spaceDown !== true) {
           t1._spaceDown = true;
-          t1._step$0();
+          t1._playerStepped = true;
         } else if (t1._won === true && t2 === 82)
           $.game.newLevel$0();
       }, "call$1", "get$_onKeyDown", 2, 0, 7],
@@ -17498,7 +17594,7 @@
           t1._spaceDown = false;
       }, "call$1", "get$_onKeyUp", 2, 0, 7],
       _onTouchStart$1: [function(e) {
-        this._currentLevel._step$0();
+        this._currentLevel._playerStepped = true;
       }, "call$1", "get$_onTouchStart", 2, 0, 13],
       Game$1: function(canvas) {
         var t1, t2, t3, t4;
@@ -17554,10 +17650,11 @@
           this.set$x(0, 800 - this.level._levelContainer._x);
         else
           this.set$x(0, x);
+        this._tolerance = this.get$boundsTransformed().width * 0.1;
       }
     },
     MagicPotion: {
-      "^": "Item;growAmount,level,broken,_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
+      "^": "Item;growAmount,level,broken,_tolerance,_display$_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       onCollide$2: function(player, playerSize) {
         var t1, t2, t3;
         this.broken = true;
@@ -17581,7 +17678,7 @@
       }
     },
     Cactus: {
-      "^": "Item;broken:Cactus_broken@,level,broken,_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
+      "^": "Item;broken:Cactus_broken@,level,broken,_tolerance,_display$_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       onCollide$2: function(player, playerSize) {
         var t1, t2;
         this.Cactus_broken = true;
@@ -17595,7 +17692,7 @@
       }
     },
     Car: {
-      "^": "Item;level,broken,_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
+      "^": "Item;level,broken,_tolerance,_display$_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       onCollide$2: function(player, playerSize) {
         var t1, t2;
         this.broken = true;
@@ -17609,7 +17706,7 @@
       }
     },
     House: {
-      "^": "Item;level,broken,_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
+      "^": "Item;level,broken,_tolerance,_display$_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       onCollide$2: function(player, playerSize) {
         var t1, t2;
         if (typeof playerSize !== "number")
@@ -17627,12 +17724,13 @@
       }
     },
     Goal: {
-      "^": "Item;level,broken,_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
+      "^": "Item;level,broken,_tolerance,_display$_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       onCollide$2: function(player, playerSize) {
         var t1, t2;
         t1 = this.level;
         if (t1._won !== true) {
           t1._won = true;
+          t1._playing = false;
           t2 = t1._activeLoopChannel;
           if (t2 != null)
             t2.stop$0(0);
@@ -17717,7 +17815,7 @@
       }
     },
     Level: {
-      "^": "DisplayObjectContainer;_backgroundColorShape,_oldBackgroundColor,_targetBackgroundColor,_backgroundColorTime,_floor,_background,_parallaxDistance,_levelContainer,_player,_items,_lastItemPosition,_destroyedCacti,_destroyedCars,_destroyedHouses,_playingTime,_shakeTime,_progressBar,_progressBarHead,_timer,_playerSize,_won,_spaceDown,_firstLoop,_secondLoop,_thirdLoop,_loop,_activeLoopChannel,_endSound,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
+      "^": "DisplayObjectContainer;_backgroundColorShape,_oldBackgroundColor,_targetBackgroundColor,_backgroundColorTime,_floor,_background,_parallaxDistance,_levelContainer,_player,_playerStepped,_items,_lastItemPosition,_destroyedCacti,_destroyedCars,_destroyedHouses,_playingTime,_playing,_shakeTime,_progressBar,_progressBarHead,_timer,_playerSize,_won,_spaceDown,_firstLoop,_secondLoop,_thirdLoop,_loop,_loopHurry,_activeLoopChannel,_stampfSound,_endSound,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       _checkItemCollisions$0: function() {
         var i, t1, item, t2, t3, t4, t5, footX, rectangle;
         for (i = 0; t1 = this._items, i < t1.length; ++i) {
@@ -17736,7 +17834,11 @@
               return t2.$mul();
             t1 = item._x;
             rectangle = item.get$bounds();
-            t1 = footX < t1 + item.get$transformationMatrix().transformRectangle$2(rectangle, rectangle).width && footX + t2 * t5 > item._x;
+            t3 = item.get$transformationMatrix().transformRectangle$2(rectangle, rectangle).width;
+            t4 = item._tolerance;
+            if (typeof t4 !== "number")
+              return H.iae(t4);
+            t1 = footX < t1 + t3 - t4 && footX + t2 * t5 > item._x + t4;
           } else
             t1 = false;
           if (t1)
@@ -17770,16 +17872,17 @@
           if (typeof t1 !== "number")
             return t1.$ge();
           if (t1 >= 2)
-            if ($.random.nextDouble$0() < distanceScrolled * 0.0005) {
+            if ($.random.nextDouble$0() < distanceScrolled * 0.0007) {
               t1 = $.$get$House_bitmapData();
               t2 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
               t3 = $.DisplayObject__nextID;
               $.DisplayObject__nextID = t3 + 1;
-              t3 = new K.House(this, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+              t3 = new K.House(this, null, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
               t3.Item$3(this, t1, null);
+              t3._tolerance = t3.get$boundsTransformed().width * 0.2;
               this._items.push(t3);
               this._levelContainer.addChild$1(t3);
-              this._lastItemPosition = 800 - this._levelContainer._x + 200;
+              this._lastItemPosition = 800 - this._levelContainer._x + 250;
               return;
             }
           t1 = this._playerSize;
@@ -17791,11 +17894,11 @@
               t2 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
               t3 = $.DisplayObject__nextID;
               $.DisplayObject__nextID = t3 + 1;
-              t3 = new K.Car(this, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+              t3 = new K.Car(this, null, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
               t3.Item$3(this, t1, null);
               this._items.push(t3);
               this._levelContainer.addChild$1(t3);
-              this._lastItemPosition = 800 - this._levelContainer._x + 100;
+              this._lastItemPosition = 800 - this._levelContainer._x + 200;
               return;
             }
           } else if ($.random.nextDouble$0() < distanceScrolled * 0.002) {
@@ -17803,7 +17906,7 @@
             t2 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
             t3 = $.DisplayObject__nextID;
             $.DisplayObject__nextID = t3 + 1;
-            t3 = new K.Cactus(null, this, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+            t3 = new K.Cactus(null, this, null, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
             t3.Item$3(this, t1, null);
             this._items.push(t3);
             this._levelContainer.addChild$1(t3);
@@ -17819,8 +17922,9 @@
             t2 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
             t3 = $.DisplayObject__nextID;
             $.DisplayObject__nextID = t3 + 1;
-            t3 = new K.MagicPotion(0.1, this, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
+            t3 = new K.MagicPotion(0.1, this, null, null, null, null, null, t2, true, true, false, true, "auto", true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, H.setRuntimeTypeInfo([], [A.BitmapFilter]), null, "", null, T.Matrix$fromIdentity(), true, null, null);
             t3.Item$3(this, t1, null);
+            t3._tolerance = t3.get$boundsTransformed().width * 0;
             this._items.push(t3);
             this._levelContainer.addChild$1(t3);
             this._lastItemPosition = 800 - this._levelContainer._x + 50;
@@ -17884,7 +17988,7 @@
         t2 = graphics._compiledCommands;
         C.JSArray_methods.set$length(t2, 0);
         graphics._bounds = null;
-        graphics.fillColor$1(4294960324);
+        graphics.fillColor$1(4294954930);
         graphics.beginPath$0(0);
         command = U.GraphicsCommandCircle$(2, 7, 2, false);
         command._setGraphics$1(graphics);
@@ -17922,7 +18026,7 @@
         graphics._bounds = null;
         graphics.fillColor$1(4280427042);
         graphics.beginPath$0(0);
-        t1 = t1 / 40000 * 800;
+        t1 = t1 / 45000 * 800;
         command = U.GraphicsCommandRect$(0, 0, t1, 30);
         command._setGraphics$1(graphics);
         t2.push(command);
@@ -17931,38 +18035,13 @@
         graphics.fillColor$1(4280470562);
         this._progressBarHead.set$x(0, t1);
       },
-      _step$0: function() {
-        var t1, t2, t3, temp;
-        if (this._activeLoopChannel == null) {
-          t1 = this._loop;
-          this._activeLoopChannel = t1.play$1(0, true);
-        }
-        t1 = this._player;
-        t2 = t1._activeFoot;
-        if (t2 == null || t1._inactiveFoot == null) {
-          t2 = t1._leftFoot;
-          t1._activeFoot = t2;
-          t1._inactiveFoot = t1._rightFoot;
-        }
-        t2 = $.game._stage.juggler.addTween$2(t2, 0.1);
-        t3 = t2.get$animate(t2);
-        t3._tween._createTweenProperty$2(t3, 1)._targetValue = -50;
-        t2 = t2.get$animate(t2);
-        t2._tween._createTweenProperty$2(t2, 8)._targetValue = 0;
-        t2 = $.game._stage.juggler.addTween$3(t1._inactiveFoot, 0.2, K.animation_Transition_easeOutCubic$closure());
-        t3 = t2.get$animate(t2);
-        t3._tween._createTweenProperty$2(t3, 1)._targetValue = -500;
-        t2 = t2.get$animate(t2);
-        t2._tween._createTweenProperty$2(t2, 8)._targetValue = -1.5707963267948966;
-        temp = t1._activeFoot;
-        t1._activeFoot = t1._inactiveFoot;
-        t1._inactiveFoot = temp;
-        this._checkItemCollisions$0();
-        t1 = this._playerSize;
-        if (typeof t1 !== "number")
-          return t1.$ge();
-        if (t1 >= 2)
-          this._shakeTime = 0.5;
+      _playLoop$1: function(loop) {
+        var t1 = this._activeLoopChannel;
+        if (t1 != null)
+          t1.stop$0(0);
+        t1 = loop.play$1(0, true);
+        t1.set$position(0, 0);
+        this._activeLoopChannel = t1;
       }
     },
     Level__drawBackgroundShapes_randomRect: {
@@ -17984,15 +18063,13 @@
     main_closure: {
       "^": "Closure:0;",
       call$1: function(_) {
-        var t1 = document;
-        P.print("readystate: " + H.S(t1.readyState));
-        if (t1.readyState === "complete")
+        if (document.readyState === "complete")
           $.game = K.Game$($.canvas);
         return;
       }
     },
     Player: {
-      "^": "Sprite;_targetScale,_blinkTime,_leftLeg,_body,_leftFoot,_rightFoot,_activeFoot,_inactiveFoot,_growSound,_outchSound,_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
+      "^": "Sprite;_targetScale,_blinkTime,_leftLeg,_body,_leftFoot,_rightFoot,_activeFoot,_inactiveFoot,_growSound,_ouchSound,_display$_graphics,dropTarget,hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_blendMode,_filters,_cache,_display$_name,_parent,_transformationMatrix,_transformationMatrixRefresh,userData,_eventStreams",
       shrink$1: function(amount) {
         var t1, t2, t3;
         t1 = this._targetScale;
@@ -18011,7 +18088,7 @@
         t3.toString;
         t1._targetValue = t3;
         this._blinkTime = 0.8;
-        this._outchSound.play$0(0);
+        this._ouchSound.play$0(0);
       },
       get$activeFootPosition: function() {
         var t1, t2, t3, t4, t5;
@@ -18079,7 +18156,7 @@
         t2._originalCommands.push(command);
         C.JSArray_methods.set$length(t2._compiledCommands, 0);
         t2._bounds = null;
-        this._body.get$graphics().fillColor$1(4294960324);
+        this._body.get$graphics().fillColor$1(4294954930);
         this._body.get$graphics().beginPath$0(0);
         this._body.get$graphics().moveTo$2(0, 50, -600);
         this._body.get$graphics().lineTo$2(0, leftHandX, leftHandY);
@@ -18128,7 +18205,7 @@
         t2._originalCommands.push(command);
         C.JSArray_methods.set$length(t2._compiledCommands, 0);
         t2._bounds = null;
-        this._body.get$graphics().fillColor$1(4294960324);
+        this._body.get$graphics().fillColor$1(4294954930);
         this._body.get$graphics().beginPath$0(0);
         this._body.get$graphics().moveTo$2(0, 50, -600);
         this._body.get$graphics().lineTo$2(0, rightHandX, rightHandY);
@@ -18156,7 +18233,7 @@
         t2._originalCommands.push(command);
         C.JSArray_methods.set$length(t2._compiledCommands, 0);
         t2._bounds = null;
-        this._body.get$graphics().fillColor$1(4294960324);
+        this._body.get$graphics().fillColor$1(4294954930);
         this._body.get$graphics().beginPath$0(0);
         t2 = this._body.get$graphics();
         t2.toString;
@@ -18230,7 +18307,7 @@
         this.addChild$1(this._body);
         this.addChild$1(this._rightFoot);
         this._growSound = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "grow"), "$isSound");
-        this._outchSound = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "outch"), "$isSound");
+        this._ouchSound = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "ouch"), "$isSound");
       },
       static: {
         Player$: function() {

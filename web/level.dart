@@ -5,7 +5,7 @@ class Level extends DisplayObjectContainer {
   static final List<int> BACKGROUND_COLORS = [ 0xFFBBDDFF, /*0xFFDDBBDD,*/ 0xFFDD9999 ];
   static const int PROGRESS_BAR_COLOR = 0xFF22CC22;
   static const num GROUND_Y = 500;
-  static const num END_DISTANCE = 40000;
+  static const num END_DISTANCE = 45000;
 
   Shape _backgroundColorShape;
   int _oldBackgroundColor;
@@ -16,10 +16,12 @@ class Level extends DisplayObjectContainer {
   num _parallaxDistance;
   Sprite _levelContainer;
   Player _player;
+  bool _playerStepped;
   List<Item> _items;
   num _lastItemPosition;
   num _destroyedCacti, _destroyedCars, _destroyedHouses;
   num _playingTime;
+  bool _playing;
   num _shakeTime;
   Sprite _progressBar;
   Shape _progressBarHead;
@@ -27,8 +29,9 @@ class Level extends DisplayObjectContainer {
   int _playerSize;
   bool _won;
   bool _spaceDown;
-  Sound _firstLoop, _secondLoop, _thirdLoop, _loop;
+  Sound _firstLoop, _secondLoop, _thirdLoop, _loop, _loopHurry;
   SoundChannel _activeLoopChannel;
+  Sound _stampfSound;
   Sound _endSound;
 
   Level() {
@@ -53,12 +56,15 @@ class Level extends DisplayObjectContainer {
     addChild(_levelContainer);
     _player = new Player();
     _levelContainer.addChild(_player);
+    _playerStepped = false;
 
     _items = new List<Item>();
     _lastItemPosition = 0;
 
     _destroyedCacti = _destroyedCars = _destroyedHouses = 0;
     _playingTime = -120;
+    //_playingTime = -4;
+    _playing = false;
 
     _shakeTime = 0;
 
@@ -69,7 +75,7 @@ class Level extends DisplayObjectContainer {
     _drawProgressBarHead(_progressBarHead.graphics);
     _updateProgressBar(_progressBar.graphics);
 
-    _timer = new TextField('', new TextFormat(Game.FONT, 30, 0xFF222222))
+    _timer = new TextField('', new TextFormat(Game.FONT, 30, 0xFF222222)..bold = true)
       ..x = Game.WIDTH - 150
       ..y = 60
       ..width = Game.WIDTH;
@@ -117,6 +123,8 @@ class Level extends DisplayObjectContainer {
     _secondLoop = resourceManager.getSound('second');
     _thirdLoop = resourceManager.getSound('third');
     _loop = resourceManager.getSound('loop');
+    _loopHurry = resourceManager.getSound('loop_hurry');
+    _stampfSound = resourceManager.getSound('stampf');
     _endSound = resourceManager.getSound('end');
   }
 
@@ -171,16 +179,16 @@ class Level extends DisplayObjectContainer {
   void _spawnItems(num distanceScrolled) {
     if (_lastItemPosition < -_levelContainer.x + Game.WIDTH - 50) {
       if (_playerSize >= 2) {
-        if (random.nextDouble() < distanceScrolled * 0.0005) {
+        if (random.nextDouble() < distanceScrolled * 0.0007) {
           _addItem(new House(this));
-          _lastItemPosition = Game.WIDTH - _levelContainer.x + 200;
+          _lastItemPosition = Game.WIDTH - _levelContainer.x + 250;
           return;
         }
       }
       if (_playerSize >= 1) {
         if (random.nextDouble() < distanceScrolled * 0.001) {
           _addItem(new Car(this));
-          _lastItemPosition = Game.WIDTH - _levelContainer.x + 100;
+          _lastItemPosition = Game.WIDTH - _levelContainer.x + 200;
           return;
         }
       } else if (_playerSize == 0) {
@@ -300,7 +308,7 @@ class Level extends DisplayObjectContainer {
     _progressBarHead.x = progress * Game.WIDTH;
   }
 
-  void _playLoop(Sound loop) {
+  void _playLoop(Sound loop/*, [num positionFactor = null]*/) {
     /*if (_player.scaleY >= 1.0) {
       _thirdLoop.play().onComplete.listen((_) => _playMusic());
     } else if (_player.scaleY >= 0.6) {
@@ -308,30 +316,35 @@ class Level extends DisplayObjectContainer {
     } else {
       _firstLoop.play().onComplete.listen((_) => _playMusic());
     }*/
-    //num position = 0;
+    num position = 0;
     if (_activeLoopChannel != null) {
-    //  position = _activeLoopChannel.position;
+      /*if (positionFactor != null) {
+        position = _activeLoopChannel.position * positionFactor;
+      }*/
       _activeLoopChannel.stop();
     }
-    _activeLoopChannel = loop.play(true)/*..position = position*/;
+    _activeLoopChannel = loop.play(true)..position = position;
   }
 
   num get scrollX { return _levelContainer.x; }
 
   void _step() {
-    if (_activeLoopChannel == null) {
+    if (!_playing && !_won) {
+      _playing = true;
       _playLoop(_loop);
     }
     _player.step();
     _checkItemCollisions();
     if (_playerSize >= 2) {
       _shakeTime = 0.5;
+      _stampfSound.play();
     }
   }
 
   void onWin() {
     if (!_won) {
       _won = true;
+      _playing = false;
       if (_activeLoopChannel != null) {
         _activeLoopChannel.stop();
       }
@@ -400,14 +413,14 @@ class Level extends DisplayObjectContainer {
 
   void onCanvasClick(int button) {
     if (button == 0) {
-      _step();
+      _playerStepped = true;
     }
   }
 
   void onCanvasKeyDown(int keyCode) {
     if (keyCode == html.KeyCode.SPACE && !_spaceDown) {
       _spaceDown = true;
-      _step();
+      _playerStepped = true;
     } else if (_won && keyCode == html.KeyCode.R) {
       game.newLevel();
     }
@@ -420,14 +433,18 @@ class Level extends DisplayObjectContainer {
   }
 
   void onCanvasTouch() {
-    _step();
+    _playerStepped = true;
   }
 
   void update(num passedTime) {
-    _playingTime += passedTime;
-    if (_playingTime - passedTime < 0 && _playingTime >= 0) { // just turned 8 a.m.
-      _targetBackgroundColor = BACKGROUND_COLORS[1];
-      _backgroundColorTime = 1.0;
+    if (_playing) {
+      _playingTime += passedTime;
+      if (_playingTime - passedTime < 0 && _playingTime >= 0) { // just turned 8 a.m.
+        _targetBackgroundColor = BACKGROUND_COLORS[1];
+        _backgroundColorTime = 1.0;
+        _timer.textColor = 0xFFDD2222;
+        _playLoop(_loopHurry);
+      }
     }
     num time = 8 * 3600 + _playingTime; // origin is 8 a.m.
     num hours = time ~/ 3600;
@@ -435,6 +452,10 @@ class Level extends DisplayObjectContainer {
     num seconds = time.floor() % 60;
     _timer.text = '${hours < 10 ? '0' : ''}$hours:${minutes < 10 ? '0' : ''}$minutes:${seconds < 10 ? '0' : ''}$seconds';
     _scroll(passedTime);
+    if (_playerStepped) {
+      _step();
+      _playerStepped = false;
+    }
     _player.update(passedTime);
     _checkItemsOffScreen();
     _updateProgressBar(_progressBar.graphics);

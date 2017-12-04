@@ -17,7 +17,7 @@ Random random;
 Game game;
 
 Future<Null> main() async {
-  print('what a guy!');
+  print('\'tis the season!');
   canvas = html.querySelector('#stage');
   canvas.context2D.imageSmoothingEnabled = true;
 
@@ -35,7 +35,6 @@ Future<Null> main() async {
 }
 
 void onReadyStateChange() {
-  print('readystate: ${html.document.readyState}');
   if (html.document.readyState == "complete") {
     game = new Game(canvas);
   }
@@ -56,7 +55,9 @@ void addResources() {
   resourceManager.addSound('second', 'sounds/second.ogg');
   resourceManager.addSound('third', 'sounds/third.ogg');
   resourceManager.addSound('loop', 'sounds/loop.ogg');
+  resourceManager.addSound('loop_hurry', 'sounds/loop_hurry.ogg');
   resourceManager.addSound('grow', 'sounds/grow.ogg');
-  resourceManager.addSound('outch', 'sounds/outch.ogg');
+  resourceManager.addSound('ouch', 'sounds/ouch.ogg');
+  resourceManager.addSound('stampf', 'sounds/stampf.ogg');
   resourceManager.addSound('end', 'sounds/end.ogg');
 }

@@ -4,6 +4,7 @@ abstract class Item extends Sprite {
 
   Level level;
   bool broken;
+  num _tolerance;
 
   Item(this.level, BitmapData bitmapData, [num x = null]) {
     broken = false;
@@ -13,7 +14,10 @@ abstract class Item extends Sprite {
     } else {
       this.x = x;
     }
+    _tolerance = width * 0.1;
   }
+
+  num get tolerance { return _tolerance; }
 
   void setBitmap(BitmapData bitmapData) {
     removeChildren();
@@ -32,7 +36,9 @@ class MagicPotion extends Item {
 
   num growAmount;
 
-  MagicPotion(Level level, [num x = null, this.growAmount = 0.1]) : super(level, bitmapData, x);
+  MagicPotion(Level level, [num x = null, this.growAmount = 0.1]) : super(level, bitmapData, x) {
+    _tolerance = width * 0.0;
+  }
 
   @override
   void onCollide(Player player, int playerSize) {
@@ -86,7 +92,9 @@ class House extends Item {
   static BitmapData bitmapData = resourceManager.getBitmapData('house');
   static BitmapData bitmapDataBroken = resourceManager.getBitmapData('house_broken');
 
-  House(Level level, [num x = null]) : super(level, bitmapData, x);
+  House(Level level, [num x = null]) : super(level, bitmapData, x) {
+    _tolerance = width * 0.2;
+  }
 
   @override
   void onCollide(Player player, int playerSize) {
