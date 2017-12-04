@@ -18,6 +18,9 @@ Game game;
 
 Future<Null> main() async {
   print('release candidate 1');
+
+  html.window.onKeyDown.listen((e) => e.preventDefault());
+
   canvas = html.querySelector('#stage');
   canvas.context2D.imageSmoothingEnabled = true;
 

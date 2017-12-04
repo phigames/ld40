@@ -17138,6 +17138,7 @@
             case 0:
               // Function start
               P.print("release candidate 1");
+              W._EventStreamSubscription$(window, "keydown", new K.main_closure(), false, W.KeyboardEvent);
               t1 = document;
               t2 = t1.querySelector("#stage");
               $.canvas = t2;
@@ -17193,7 +17194,7 @@
               // returning from await.
               $.random = C.C__JSRandom;
               if (t1.readyState !== "complete")
-                W._EventStreamSubscription$(t1, "readystatechange", new K.main_closure(), false, W.Event);
+                W._EventStreamSubscription$(t1, "readystatechange", new K.main_closure0(), false, W.Event);
               else
                 $.game = K.Game$($.canvas);
               // implicit return
@@ -18049,6 +18050,12 @@
       }
     },
     main_closure: {
+      "^": "Closure:0;",
+      call$1: function(e) {
+        return J.preventDefault$0$x(e);
+      }
+    },
+    main_closure0: {
       "^": "Closure:0;",
       call$1: function(_) {
         if (document.readyState === "complete")
