@@ -51,9 +51,6 @@ void addResources() {
   resourceManager.addBitmapData('house_broken', 'images/house_broken.png');
   resourceManager.addBitmapData('goal', 'images/goal.png');
 
-  resourceManager.addSound('first', 'sounds/first.ogg');
-  resourceManager.addSound('second', 'sounds/second.ogg');
-  resourceManager.addSound('third', 'sounds/third.ogg');
   resourceManager.addSound('loop', 'sounds/loop.ogg');
   resourceManager.addSound('loop_hurry', 'sounds/loop_hurry.ogg');
   resourceManager.addSound('grow', 'sounds/grow.ogg');

@@ -29,7 +29,7 @@ class Level extends DisplayObjectContainer {
   int _playerSize;
   bool _won;
   bool _spaceDown;
-  Sound _firstLoop, _secondLoop, _thirdLoop, _loop, _loopHurry;
+  Sound _loop, _loopHurry;
   SoundChannel _activeLoopChannel;
   Sound _stampfSound;
   Sound _endSound;
@@ -119,9 +119,6 @@ class Level extends DisplayObjectContainer {
 
     _spaceDown = false;
 
-    _firstLoop = resourceManager.getSound('first');
-    _secondLoop = resourceManager.getSound('second');
-    _thirdLoop = resourceManager.getSound('third');
     _loop = resourceManager.getSound('loop');
     _loopHurry = resourceManager.getSound('loop_hurry');
     _stampfSound = resourceManager.getSound('stampf');
